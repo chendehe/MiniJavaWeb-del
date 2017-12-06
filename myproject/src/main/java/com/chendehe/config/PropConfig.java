@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "aaa")
 @PropertySource("classpath:config/template.properties")
-public class TemplateConfig {
+public class PropConfig {
 
   private String test1;
 

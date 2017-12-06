@@ -1,7 +1,7 @@
 package com.chendehe.util;
 
 import com.chendehe.common.MyConstant;
-import com.chendehe.config.TemplateConfig;
+import com.chendehe.config.PropConfig;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
@@ -10,7 +10,7 @@ import org.springframework.util.ResourceUtils;
 /**
  * 读取配置文件，或者使用 TemplateConfig
  *
- * @see TemplateConfig
+ * @see PropConfig
  */
 public final class PropUtil {
 
