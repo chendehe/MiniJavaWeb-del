@@ -1,14 +1,15 @@
 package com.chendehe.service;
 
+import com.chendehe.vo.Page;
+import com.chendehe.vo.PageResult;
 import com.chendehe.vo.UserVo;
-import java.util.List;
 
 public interface UserService {
 
   /**
    * 查找列表
    */
-  List<UserVo> findAll();
+  PageResult<UserVo> findAll(Page page);
 
   /**
    * 查找详情
@@ -18,12 +19,12 @@ public interface UserService {
   /**
    * 新建
    */
-  void save(UserVo vo);
+  UserVo save(UserVo vo);
 
   /**
    * 更新
    */
-  void update(UserVo vo);
+  UserVo update(UserVo vo);
 
   /**
    * 删除

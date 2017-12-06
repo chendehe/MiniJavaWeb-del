@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
 import com.chendehe.service.UserService;
+import com.chendehe.vo.Page;
+import com.chendehe.vo.PageResult;
 import com.chendehe.vo.UserVo;
-import java.util.List;
-import org.assertj.core.util.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +43,9 @@ public class UserTest {
 
   @Test
   public void mockTest() {
-    given(userService.findAll()).willReturn(Lists.newArrayList());
-    List<UserVo> all = userService.findAll();
-    assertThat(all).isEmpty();
+    given(userService.findAll(new Page())).willReturn(new PageResult<>());
+    PageResult<UserVo> all = userService.findAll(new Page());
+    assertThat(all).isNull();
   }
 
 }

@@ -2,6 +2,9 @@ package com.chendehe.service;
 
 import com.chendehe.dao.UserDao;
 import com.chendehe.entity.UserEntity;
+import com.chendehe.util.IdGenerator;
+import com.chendehe.vo.Page;
+import com.chendehe.vo.PageResult;
 import com.chendehe.vo.UserVo;
 import java.util.Date;
 import java.util.List;
@@ -20,16 +23,20 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public List<UserVo> findAll() {
+  public PageResult<UserVo> findAll(Page page) {
 
+    PageResult<UserVo> result = new PageResult<>();
     List<UserEntity> userList = userDao.findAll();
     List<UserVo> userVoList = Lists.newArrayList();
 
     for (UserEntity user : userList) {
       userVoList.add(convertEntityToVo(user));
     }
-
-    return userVoList;
+    result.setList(userVoList);
+    result.setTotalNum(11);
+    result.setPageSize(page.getPageSize());
+    result.setCurrentPage(page.getCurrentPage());
+    return result;
   }
 
   @Override
@@ -38,18 +45,42 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void save(UserVo vo) {
-    userDao.save(convertVoToEntity(vo));
+  public UserVo save(UserVo vo) {
+    UserEntity entity = convertVoToEntity(vo);
+    userDao.save(entity);
+
+    vo.setId(entity.getId());
+    return vo;
   }
 
   @Override
-  public void update(UserVo vo) {
-    userDao.update(convertVoToEntity(vo));
+  public UserVo update(UserVo vo) {
+    UserEntity user = convertVoToEntityUpdate(vo);
+
+    userDao.update(user);
+    return vo;
   }
 
   @Override
   public void delete(String id) {
     userDao.delete(id);
+  }
+
+  /**
+   * vo 转为更新后的 entity
+   *
+   * @param vo UserVo
+   * @return UserEntity
+   */
+  private UserEntity convertVoToEntityUpdate(UserVo vo) {
+    UserEntity user = new UserEntity();
+    user.setId(vo.getId());
+    user.setName(vo.getName());
+    user.setGender(vo.getGender());
+    user.setBirthday(vo.getBirthday());
+    user.setAddress(vo.getAddress());
+    user.setUpdateTime(new Date());
+    return user;
   }
 
   /**
@@ -76,7 +107,7 @@ public class UserServiceImpl implements UserService {
    */
   private UserEntity convertVoToEntity(UserVo vo) {
     UserEntity user = new UserEntity();
-    user.setId(vo.getId());
+    user.setId(IdGenerator.get());
     user.setName(vo.getName());
     user.setGender(vo.getGender());
     user.setBirthday(vo.getBirthday());

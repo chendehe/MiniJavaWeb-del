@@ -3,6 +3,7 @@ package com.chendehe.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.chendehe.service.UserService;
 import com.chendehe.vo.Page;
+import com.chendehe.vo.PageResult;
 import com.chendehe.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,50 +32,50 @@ public class UserController {
    * 查找列表
    */
   @GetMapping("/list")
-  String findAll(Page page) {
+  PageResult<UserVo> findAll(Page page) {
     LOGGER.info("[UserController] id is:{}", page);
-    service.findAll();
-    return "FindAll";
+    PageResult<UserVo> result = service.findAll(page);
+    return result;
   }
 
   /**
    * 查找详情
    */
   @GetMapping("/{id}")
-  String findOne(@PathVariable String id) {
+  UserVo findOne(@PathVariable String id) {
     LOGGER.info("[UserController] id is:{}", id);
-    UserVo vo = service.findOne(id);
-    return "FindOne";
+    return service.findOne(id);
   }
 
   /**
    * 新建
    */
   @PostMapping("/")
-  String save(@RequestBody UserVo userVo) {
+  UserVo save(@RequestBody UserVo userVo) {
     LOGGER.info("[UserController] user is:{}", JSONObject.toJSON(userVo));
-    service.save(userVo);
-    return "Added";
+    return service.save(userVo);
   }
 
   /**
    * 更新
    */
   @PutMapping("/{id}")
-  String update(@RequestBody UserVo userVo, @PathVariable String id) {
+  UserVo update(@RequestBody UserVo userVo, @PathVariable String id) {
     LOGGER.info("[UserController] user is:{}, id is:{}", JSONObject.toJSON(userVo), id);
-    service.update(userVo);
-    return "Updated";
+    userVo.setId(id);
+    return service.update(userVo);
   }
 
   /**
    * 删除
    */
   @DeleteMapping("/{id}")
-  String delete(@PathVariable String id) {
+  JSONObject delete(@PathVariable String id) {
     LOGGER.info("[UserController] id is:{}", id);
     service.delete(id);
-    return "Deleted";
+    JSONObject json = new JSONObject();
+    json.put("status", "success");
+    return json;
   }
 
 }
