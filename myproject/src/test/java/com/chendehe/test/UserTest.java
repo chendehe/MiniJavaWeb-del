@@ -3,7 +3,7 @@ package com.chendehe.test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
-import com.chendehe.service.SampleService;
+import com.chendehe.service.UserService;
 import com.chendehe.vo.UserVo;
 import java.util.List;
 import org.assertj.core.util.Lists;
@@ -21,11 +21,11 @@ import org.springframework.test.context.junit4.SpringRunner;
  * SpringRunner指明是测试类 SpringBootTest创建ApplicationContext,其他的还有@…​Test
  * 使用随机端口配置RANDOM_PORT，其他MOCK、DEFINED_PORT、NONE 自动扫描同一路径下的class文件进行测试 导入测试依赖的类
  * 自定义配置@Import(MyTestsConfiguration.class)  @AutoConfigure… exclude
- * 排除测试@ImportAutoConfiguration(exclude = SampleService.class)
+ * 排除测试@ImportAutoConfiguration(exclude = UserService.class)
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class SampleTest {
+public class UserTest {
 
   // controller
   @Autowired
@@ -33,7 +33,7 @@ public class SampleTest {
 
   // mock
   @MockBean
-  private SampleService sampleService;
+  private UserService userService;
 
   @Test
   public void controllerTest() {
@@ -43,8 +43,8 @@ public class SampleTest {
 
   @Test
   public void mockTest() {
-    given(sampleService.findAll()).willReturn(Lists.newArrayList());
-    List<UserVo> all = sampleService.findAll();
+    given(userService.findAll()).willReturn(Lists.newArrayList());
+    List<UserVo> all = userService.findAll();
     assertThat(all).isEmpty();
   }
 
