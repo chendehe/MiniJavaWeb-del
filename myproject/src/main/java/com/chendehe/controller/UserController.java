@@ -41,7 +41,7 @@ public class UserController {
    * 查找详情
    */
   @GetMapping("/{id}")
-  String findOne(String id) {
+  String findOne(@PathVariable String id) {
     LOGGER.info("[UserController] id is:{}", id);
     UserVo vo = service.findOne(id);
     return "FindOne";
