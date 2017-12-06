@@ -1,25 +1,17 @@
 package com.chendehe.dao;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.springframework.stereotype.Repository;
-
+import com.chendehe.entity.UserEntity;
 import java.util.List;
 
-import com.chendehe.entity.UserEntity;
-
-@Repository
-@Mapper
 public interface UserDao {
 
-    @Select("SELECT * FROM T_USER")
-    List<UserEntity> getAll();
+  List<UserEntity> getAll();
 
-    UserEntity getOne(Long id);
+  UserEntity getOne(Long id);
 
-    void save(UserEntity user);
+  void save(UserEntity user);
 
-    void update(UserEntity user);
+  void update(UserEntity user);
 
-    void delete(Long id);
+  void delete(Long id);
 }
