@@ -1,10 +1,10 @@
 CREATE TABLE `t_user` (
-`id`  char(32) CHARACTER SET NOT NULL ,
-`name`  varchar(10) CHARACTER SET DEFAULT NULL ,
-`gender`  tinyint(4) NULL DEFAULT NULL ,
-`birthday`  timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP ,
-`address`  varchar(255) CHARACTER SET DEFAULT NULL ,
-`create_time`  datetime NULL DEFAULT NULL ,
+`id`  char(32),
+`name`  varchar(10),
+`gender`  tinyint(4),
+`birthday`  timestamp,
+`address`  varchar(255),
+`create_time`  datetime,
 PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
