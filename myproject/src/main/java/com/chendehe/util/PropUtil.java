@@ -8,7 +8,7 @@ import java.util.Properties;
 import org.springframework.util.ResourceUtils;
 
 /**
- * 读取配置文件，或者使用 TemplateConfig
+ * 读取配置文件，或者使用 TemplateConfig.
  *
  * @see PropConfig
  */

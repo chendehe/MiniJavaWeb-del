@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
   }
 
   /**
-   * vo 转为更新后的 entity
+   * vo 转为更新后的 entity.
    *
    * @param vo UserVo
    * @return UserEntity
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
   }
 
   /**
-   * entity 转为 vo
+   * entity 转为 vo.
    *
    * @param user entity
    * @return vo
@@ -100,7 +100,7 @@ public class UserServiceImpl implements UserService {
   }
 
   /**
-   * vo 转为 entity
+   * vo 转为 entity.
    *
    * @param vo UserVo
    * @return UserEntity

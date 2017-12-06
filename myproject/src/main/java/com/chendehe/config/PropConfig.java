@@ -6,7 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 /**
- * 使用@ConfigurationProperties 获取配置文件内容 也可以用@Value 给每个属性逐个注入 或者使用工具类直接获取配置
+ * 使用@ConfigurationProperties 获取配置文件内容 也可以用@Value 给每个属性逐个注入 或者使用工具类直接获取配置.
  *
  * @see PropUtil
  */

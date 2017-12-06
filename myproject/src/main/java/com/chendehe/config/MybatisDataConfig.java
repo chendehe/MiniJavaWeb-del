@@ -20,7 +20,7 @@ public class MybatisDataConfig {
   }
 
   /**
-   * 必须指定名称 sqlSessionFactory
+   * 必须指定名称 sqlSessionFactory.
    */
   @Bean("sqlSessionFactory")
   public SqlSessionFactory getBean() throws Exception {

@@ -29,7 +29,7 @@ public class UserController {
   }
 
   /**
-   * 查找列表
+   * 查找列表.
    */
   @GetMapping("/list")
   PageResult<UserVo> findAll(Page page) {
@@ -39,7 +39,7 @@ public class UserController {
   }
 
   /**
-   * 查找详情
+   * 查找详情.
    */
   @GetMapping("/{id}")
   UserVo findOne(@PathVariable String id) {
@@ -48,7 +48,7 @@ public class UserController {
   }
 
   /**
-   * 新建
+   * 新建.
    */
   @PostMapping("/")
   UserVo save(@RequestBody UserVo userVo) {
@@ -57,7 +57,7 @@ public class UserController {
   }
 
   /**
-   * 更新
+   * 更新.
    */
   @PutMapping("/{id}")
   UserVo update(@RequestBody UserVo userVo, @PathVariable String id) {
@@ -67,7 +67,7 @@ public class UserController {
   }
 
   /**
-   * 删除
+   * 删除.
    */
   @DeleteMapping("/{id}")
   JSONObject delete(@PathVariable String id) {

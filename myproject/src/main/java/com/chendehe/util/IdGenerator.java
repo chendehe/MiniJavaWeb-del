@@ -8,8 +8,8 @@ public final class IdGenerator {
   private IdGenerator() {
   }
 
-  /**
-   * @return 时间戳、
+  /** 生成主键id.
+   * @return 时间戳
    */
   public static String get() {
     return new Date().getTime() + RandomUtils.nextInt(1000, 9999) + "";

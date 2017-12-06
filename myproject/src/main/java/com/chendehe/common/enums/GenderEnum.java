@@ -5,7 +5,7 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
- * 性别 1-男，2-女
+ * 性别 1-男，2-女.
  */
 public enum GenderEnum {
 
