@@ -8,6 +8,8 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
 server:
   port: 1111
+logging:
+  level: info
 
 
 

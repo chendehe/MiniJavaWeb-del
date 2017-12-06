@@ -1,6 +1,7 @@
 package com.chendehe.vo;
 
 import java.util.Date;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class UserVo {
 
@@ -52,12 +53,6 @@ public class UserVo {
 
   @Override
   public String toString() {
-    return "UserVo{" +
-        "id='" + id + '\'' +
-        ", name='" + name + '\'' +
-        ", sex=" + sex +
-        ", birthday=" + birthday +
-        ", address='" + address + '\'' +
-        '}';
+    return ToStringBuilder.reflectionToString(this);
   }
 }

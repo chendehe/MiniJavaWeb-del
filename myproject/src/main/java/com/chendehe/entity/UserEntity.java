@@ -1,7 +1,9 @@
 package com.chendehe.entity;
 
+import com.google.common.base.Objects;
 import java.io.Serializable;
 import java.util.Date;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class UserEntity implements Serializable {
 
@@ -65,54 +67,20 @@ public class UserEntity implements Serializable {
 
   @Override
   public String toString() {
-    return "UserEntity{" +
-        "id='" + id + '\'' +
-        ", name='" + name + '\'' +
-        ", sex=" + sex +
-        ", birthday=" + birthday +
-        ", address='" + address + '\'' +
-        ", createTime=" + createTime +
-        '}';
+    // java-Objects.toString(),guava-MoreObjects.toStringHelper()
+    return ToStringBuilder.reflectionToString(this);
   }
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-
-    UserEntity that = (UserEntity) o;
-
-    if (sex != that.sex) {
-      return false;
-    }
-    if (id != null ? !id.equals(that.id) : that.id != null) {
-      return false;
-    }
-    if (name != null ? !name.equals(that.name) : that.name != null) {
-      return false;
-    }
-    if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) {
-      return false;
-    }
-    if (address != null ? !address.equals(that.address) : that.address != null) {
-      return false;
-    }
-    return createTime != null ? createTime.equals(that.createTime) : that.createTime == null;
+    // Apache Commons Lang3-EqualsBuilder
+    return Objects.equal(this, o);
   }
 
   @Override
   public int hashCode() {
-    int result = id != null ? id.hashCode() : 0;
-    result = 31 * result + (name != null ? name.hashCode() : 0);
-    result = 31 * result + sex;
-    result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
-    result = 31 * result + (address != null ? address.hashCode() : 0);
-    result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
-    return result;
+    // Apache Commons Lang3-HashCodeBuilder
+    return Objects.hashCode(this);
   }
 
 }
