@@ -28,7 +28,7 @@ public class MybatisDataConfig {
     factoryBean.setDataSource(dataSource);
 
     ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-    factoryBean.setMapperLocations(resolver.getResources("classpath:com/chendehe/dao/*.xml"));
+    factoryBean.setMapperLocations(resolver.getResources("classpath*:mapper/*.xml"));
     factoryBean.setTypeAliasesPackage("com.chendehe.entity");
     return factoryBean.getObject();
   }

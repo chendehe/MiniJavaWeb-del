@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.chendehe.dao.UserDao">
+  <resultMap id="User" type="com.chendehe.entity.UserEntity">
+    <id column="id" property="id" jdbcType="CHAR"/>
+    <result column="name" property="name" jdbcType="VARCHAR"/>
+    <result column="sex" property="sex" jdbcType="TINYINT"/>
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP"/>
+    <result column="address" property="address" jdbcType="VARCHAR"/>
+    <result column="create_time" property="createTime" jdbcType="DATE"/>
+  </resultMap>
+
+  <select id="findAll" resultMap="User">
+    select * from t_user
+  </select>
+
+  <select id="findOne"  parameterType="string" resultMap="User">
+    select * from t_user where id = #{id}
+  </select>
+
+  <select id="save">
+    select * from t_user where id = #{id}
+  </select>
+
+  <select id="update" parameterType="string">
+    select * from t_user where id = #{id}
+  </select>
+
+  <select id="delete" parameterType="string">
+    DELETE from t_user where id = #{id}
+  </select>
+</mapper>

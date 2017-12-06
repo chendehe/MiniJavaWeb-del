@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface UserDao {
 
-  List<UserEntity> getAll();
+  List<UserEntity> findAll();
 
-  UserEntity getOne(Long id);
+  UserEntity findOne(String id);
 
   void save(UserEntity user);
 

@@ -24,7 +24,7 @@ public class SampleServiceImpl implements SampleService {
 
   @Override
   public List<UserVo> findAll() {
-    List<UserEntity> userList = userDao.getAll();
+    List<UserEntity> userList = userDao.findAll();
     List<UserVo> userVoList = new ArrayList<>();
     for (UserEntity user : userList) {
       UserVo userVo = new UserVo();
@@ -43,6 +43,7 @@ public class SampleServiceImpl implements SampleService {
 
   @Override
   public UserVo findOne(String id) {
+    userDao.findOne(id);
     return new UserVo();
   }
 
