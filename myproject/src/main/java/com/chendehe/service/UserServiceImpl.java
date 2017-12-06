@@ -5,12 +5,14 @@ import com.chendehe.entity.UserEntity;
 import com.chendehe.util.IdGenerator;
 import com.chendehe.vo.Page;
 import com.chendehe.vo.PageResult;
+import com.chendehe.vo.UserValidator;
 import com.chendehe.vo.UserVo;
 import java.util.Date;
 import java.util.List;
 import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.DataBinder;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -46,6 +48,10 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserVo save(UserVo vo) {
+    DataBinder binder = new DataBinder(vo);
+    binder.setValidator(new UserValidator());
+    binder.validate();
+
     UserEntity entity = convertVoToEntity(vo);
     userDao.save(entity);
 
