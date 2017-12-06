@@ -1,0 +1,13 @@
+CREATE TABLE `t_user` (
+`id`  char(32) CHARACTER SET NOT NULL ,
+`name`  varchar(10) CHARACTER SET DEFAULT NULL ,
+`gender`  tinyint(4) NULL DEFAULT NULL ,
+`birthday`  timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP ,
+`address`  varchar(255) CHARACTER SET DEFAULT NULL ,
+`create_time`  datetime NULL DEFAULT NULL ,
+PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARACTER SET=utf8mb4 COLLATE=utf8mb4_general_ci
+ROW_FORMAT=DYNAMIC
+;

@@ -7,7 +7,7 @@ public class UserVo {
 
   private String id;
   private String name;
-  private int sex;
+  private int gender;
   private Date birthday;
   private String address;
 
@@ -27,12 +27,12 @@ public class UserVo {
     this.name = name;
   }
 
-  public int getSex() {
-    return sex;
+  public int getGender() {
+    return gender;
   }
 
-  public void setSex(int sex) {
-    this.sex = sex;
+  public void setGender(int gender) {
+    this.gender = gender;
   }
 
   public Date getBirthday() {

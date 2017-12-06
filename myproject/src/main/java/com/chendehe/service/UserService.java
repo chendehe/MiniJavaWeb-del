@@ -18,12 +18,12 @@ public interface UserService {
   /**
    * 新建
    */
-  void save(UserVo userVo);
+  void save(UserVo vo);
 
   /**
    * 更新
    */
-  void update(UserVo userVo);
+  void update(UserVo vo);
 
   /**
    * 删除

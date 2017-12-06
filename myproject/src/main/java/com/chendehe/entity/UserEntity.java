@@ -10,7 +10,7 @@ public class UserEntity implements Serializable {
   private static final long serialVersionUID = -2535178899662614143L;
   private String id;
   private String name;
-  private int sex;
+  private int gender;
   private Date birthday;
   private String address;
   private Date createTime;
@@ -40,12 +40,12 @@ public class UserEntity implements Serializable {
     this.name = name;
   }
 
-  public int getSex() {
-    return sex;
+  public int getGender() {
+    return gender;
   }
 
-  public void setSex(int sex) {
-    this.sex = sex;
+  public void setGender(int gender) {
+    this.gender = gender;
   }
 
   public Date getBirthday() {

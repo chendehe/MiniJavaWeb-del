@@ -7,7 +7,7 @@
   <resultMap id="User" type="com.chendehe.entity.UserEntity">
     <id column="id" property="id" jdbcType="CHAR"/>
     <result column="name" property="name" jdbcType="VARCHAR"/>
-    <result column="sex" property="sex" jdbcType="TINYINT"/>
+    <result column="gender" property="gender" jdbcType="TINYINT"/>
     <result column="birthday" property="birthday" jdbcType="TIMESTAMP"/>
     <result column="address" property="address" jdbcType="VARCHAR"/>
     <result column="create_time" property="createTime" jdbcType="DATE"/>

@@ -13,5 +13,5 @@ public interface UserDao {
 
   void update(UserEntity user);
 
-  void delete(Long id);
+  void delete(String id);
 }

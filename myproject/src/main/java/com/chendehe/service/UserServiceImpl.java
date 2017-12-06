@@ -3,17 +3,14 @@ package com.chendehe.service;
 import com.chendehe.dao.UserDao;
 import com.chendehe.entity.UserEntity;
 import com.chendehe.vo.UserVo;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
   private UserDao userDao;
 
@@ -24,43 +21,67 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public List<UserVo> findAll() {
+
     List<UserEntity> userList = userDao.findAll();
-    List<UserVo> userVoList = new ArrayList<>();
+    List<UserVo> userVoList = Lists.newArrayList();
+
     for (UserEntity user : userList) {
-      UserVo userVo = new UserVo();
-      userVo.setId(user.getId());
-      userVo.setName(user.getName());
-      userVo.setSex(user.getSex());
-      userVo.setBirthday(user.getBirthday());
-      userVo.setAddress(user.getAddress());
-      userVoList.add(userVo);
+      userVoList.add(convertEntityToVo(user));
     }
 
-    LOGGER.info("======>{}", userVoList.toString());
-    System.out.println(userVoList);
     return userVoList;
   }
 
   @Override
   public UserVo findOne(String id) {
-    userDao.findOne(id);
-    return new UserVo();
+    return convertEntityToVo(userDao.findOne(id));
   }
 
   @Override
-  public void save(UserVo userVo) {
-
+  public void save(UserVo vo) {
+    userDao.save(convertVoToEntity(vo));
   }
 
   @Override
-  public void update(UserVo userVo) {
-
+  public void update(UserVo vo) {
+    userDao.update(convertVoToEntity(vo));
   }
 
   @Override
   public void delete(String id) {
-
+    userDao.delete(id);
   }
 
+  /**
+   * entity 转为 vo
+   *
+   * @param user entity
+   * @return vo
+   */
+  private UserVo convertEntityToVo(UserEntity user) {
+    UserVo userVo = new UserVo();
+    userVo.setId(user.getId());
+    userVo.setName(user.getName());
+    userVo.setGender(user.getGender());
+    userVo.setBirthday(user.getBirthday());
+    userVo.setAddress(user.getAddress());
+    return userVo;
+  }
 
+  /**
+   * vo 转为 entity
+   *
+   * @param vo UserVo
+   * @return UserEntity
+   */
+  private UserEntity convertVoToEntity(UserVo vo) {
+    UserEntity user = new UserEntity();
+    user.setId(vo.getId());
+    user.setName(vo.getName());
+    user.setGender(vo.getGender());
+    user.setBirthday(vo.getBirthday());
+    user.setAddress(vo.getAddress());
+    user.setCreateTime(new Date());
+    return user;
+  }
 }

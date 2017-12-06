@@ -4,23 +4,25 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import java.util.Map;
 
-public enum LevelEnum {
+/**
+ * 性别 1-男，2-女
+ */
+public enum GenderEnum {
 
-  HIGH(1),
-  MIDDLE(2),
-  LOW(3);
+  MALE(1),
+  FEMALE(2);
 
   private int value;
 
-  LevelEnum(int value) {
+  GenderEnum(int value) {
     this.value = value;
   }
 
-  private static Map<Integer, LevelEnum> map = Maps.newHashMap();
+  private static Map<Integer, GenderEnum> map = Maps.newHashMap();
 
   static {
-    final ImmutableMap.Builder<Integer, LevelEnum> builder = ImmutableMap.builder();
-    for (LevelEnum en : LevelEnum.values()) {
+    final ImmutableMap.Builder<Integer, GenderEnum> builder = ImmutableMap.builder();
+    for (GenderEnum en : GenderEnum.values()) {
       builder.put(en.value, en);
     }
     map = builder.build();
