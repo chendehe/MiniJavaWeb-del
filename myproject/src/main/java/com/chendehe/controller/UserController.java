@@ -28,9 +28,7 @@ public class UserController {
    */
   @GetMapping("/list")
   String findAll() {
-    LOGGER.info("start====================");
     service.findAll();
-    LOGGER.info("end====================");
     return "FindAll";
   }
 

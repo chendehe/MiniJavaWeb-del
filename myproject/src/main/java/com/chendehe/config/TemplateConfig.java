@@ -1,11 +1,19 @@
 package com.chendehe.config;
 
+import com.chendehe.util.PropUtil;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-//@ConfigurationProperties(prefix = "server")
+/**
+ * 使用@ConfigurationProperties 获取配置文件内容 也可以用@Value 给每个属性逐个注入 或者使用工具类直接获取配置
+ *
+ * @see PropUtil
+ */
 @Component
-public class ConstantConfig {
+@ConfigurationProperties(prefix = "aaa")
+@PropertySource("classpath:config/template.properties")
+public class TemplateConfig {
 
   private String test1;
 
