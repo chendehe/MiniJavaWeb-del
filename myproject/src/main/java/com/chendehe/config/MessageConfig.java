@@ -9,7 +9,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
  * 国际化读取.
  */
 @Configuration
-public class MessageConofig {
+public class MessageConfig {
 
   /**
    * 国际化处理.
