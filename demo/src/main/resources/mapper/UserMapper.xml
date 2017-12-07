@@ -22,14 +22,14 @@
     select * from t_user where id = #{id}
   </select>
 
-  <select id="save">
+  <insert id="save">
     insert into t_user
     (id, name, gender, birthday, address, create_time, update_time)
     values
     (#{id}, #{name}, #{gender}, #{birthday}, #{address}, #{createTime}, #{updateTime})
-  </select>
+  </insert>
 
-  <select id="update">
+  <update id="update">
       update t_user set
         name = #{name},
         gender = #{gender},
@@ -37,9 +37,13 @@
         address = #{address},
         update_time = #{updateTime}
       where id = #{id}
-  </select>
+  </update>
 
-  <select id="delete" parameterType="string">
+  <delete id="delete" parameterType="string">
     DELETE from t_user where id = #{id}
-  </select>
+  </delete>
+
+    <select id="totalNum" resultType="int">
+        select COUNT(*) from t_user
+    </select>
 </mapper>

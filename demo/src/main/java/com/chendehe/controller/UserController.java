@@ -2,7 +2,7 @@ package com.chendehe.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chendehe.exception.BaseException;
-import com.chendehe.exception.ExceptionUtils;
+import com.chendehe.exception.ResultUtil;
 import com.chendehe.service.UserService;
 import com.chendehe.vo.Page;
 import com.chendehe.vo.PageResult;
@@ -10,6 +10,8 @@ import com.chendehe.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,77 +34,76 @@ public class UserController {
 
   /**
    * 查找列表.
+   * 成功返回200.
    */
   @GetMapping("/list")
-  PageResult<UserVo> findAll(Page page) {
+  ResponseEntity<PageResult<UserVo>> findAll(Page page) {
     LOGGER.info("[UserController] id is:{}", page);
     try {
-      PageResult<UserVo> result = service.findAll(page);
-      return result;
+      return ResultUtil.success(service.findAll(page), HttpStatus.OK);
     } catch (BaseException e) {
-      ExceptionUtils.exception(e);
+      return ResultUtil.exception(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return null;
   }
 
   /**
    * 查找详情.
+   * 成功返回200.
    */
   @GetMapping("/{id}")
-  UserVo findOne(@PathVariable String id) {
+  ResponseEntity<UserVo> findOne(@PathVariable String id) {
     LOGGER.info("[UserController] id is:{}", id);
     try {
-      return service.findOne(id);
+      return ResultUtil.success(service.findOne(id), HttpStatus.OK);
     } catch (BaseException e) {
-      ExceptionUtils.exception(e);
+      return ResultUtil.exception(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return null;
   }
 
   /**
    * 新建.
+   * 成功返回201.
    */
   @PostMapping("/")
-  UserVo save(@RequestBody UserVo userVo) {
+  ResponseEntity<UserVo> save(@RequestBody UserVo userVo) {
     LOGGER.info("[UserController] user is:{}", JSONObject.toJSON(userVo));
     try {
-      return service.save(userVo);
-    } catch (BaseException e) {
-      ExceptionUtils.exception(e);
+      return ResultUtil.success(service.save(userVo), HttpStatus.CREATED);
+    } catch (Exception e) {
+      return ResultUtil.exception(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return null;
   }
 
   /**
    * 更新.
+   * 成功返回201.
    */
   @PutMapping("/{id}")
-  UserVo update(@RequestBody UserVo userVo, @PathVariable String id) {
+  ResponseEntity<UserVo> update(@RequestBody UserVo userVo, @PathVariable String id) {
     LOGGER.info("[UserController] user is:{}, id is:{}", JSONObject.toJSON(userVo), id);
     userVo.setId(id);
     try {
-      return service.update(userVo);
+      return ResultUtil.success(service.update(userVo), HttpStatus.CREATED);
     } catch (Exception e) {
-      ExceptionUtils.exception(e);
+      return ResultUtil.exception(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return null;
   }
 
   /**
    * 删除.
+   * 成功返回204.
    */
   @DeleteMapping("/{id}")
-  JSONObject delete(@PathVariable String id) {
+  ResponseEntity<JSONObject> delete(@PathVariable String id) {
     LOGGER.info("[UserController] id is:{}", id);
     try {
       service.delete(id);
       JSONObject json = new JSONObject();
       json.put("status", "success");
-      return json;
+      return ResultUtil.success(json, HttpStatus.NO_CONTENT);
     } catch (BaseException e) {
-      ExceptionUtils.exception(e);
+      return ResultUtil.exception(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    return null;
   }
 
 }

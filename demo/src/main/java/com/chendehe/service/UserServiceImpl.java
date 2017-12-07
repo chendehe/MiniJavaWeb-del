@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
       userVoList.add(convertEntityToVo(user));
     }
     result.setList(userVoList);
-    result.setTotalNum(11);
+    result.setTotalNum(userDao.totalNum());
     result.setPageSize(page.getPageSize());
     result.setCurrentPage(page.getCurrentPage());
     return result;
@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserVo findOne(String id) {
+    DataCheck.checkTrimStrEmpty(id, ErrorCode.PARAM_EMPTY, "id");
     return convertEntityToVo(userDao.findOne(id));
   }
 
@@ -53,13 +54,13 @@ public class UserServiceImpl implements UserService {
     //DataBinder binder = new DataBinder(vo);
     //binder.setValidator(new UserValidator());
     //binder.validate();
+    vo.setId(IdGenerator.get());
 
     checkInputData(vo);
 
-    UserEntity entity = convertVoToEntity(vo);
+    UserEntity entity = convertVoToEntitySave(vo);
     userDao.save(entity);
 
-    vo.setId(entity.getId());
     return vo;
   }
 
@@ -76,24 +77,8 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void delete(String id) {
+    DataCheck.checkTrimStrEmpty(id, ErrorCode.PARAM_EMPTY, "id");
     userDao.delete(id);
-  }
-
-  /**
-   * vo 转为更新后的 entity.
-   *
-   * @param vo UserVo
-   * @return UserEntity
-   */
-  private UserEntity convertVoToEntityUpdate(UserVo vo) {
-    UserEntity user = new UserEntity();
-    user.setId(vo.getId());
-    user.setName(vo.getName());
-    user.setGender(vo.getGender());
-    user.setBirthday(vo.getBirthday());
-    user.setAddress(vo.getAddress());
-    user.setUpdateTime(new Date());
-    return user;
   }
 
   /**
@@ -118,15 +103,36 @@ public class UserServiceImpl implements UserService {
    * @param vo UserVo
    * @return UserEntity
    */
-  private UserEntity convertVoToEntity(UserVo vo) {
+  private UserEntity convertVoToEntitySave(UserVo vo) {
     UserEntity user = new UserEntity();
-    user.setId(IdGenerator.get());
+
+    convertVoToEntity(vo, user);
+
+    user.setCreateTime(new Date());
+    return user;
+  }
+
+  /**
+   * vo 转为更新后的 entity.
+   *
+   * @param vo UserVo
+   * @return UserEntity
+   */
+  private UserEntity convertVoToEntityUpdate(UserVo vo) {
+    UserEntity user = new UserEntity();
+
+    convertVoToEntity(vo, user);
+
+    user.setUpdateTime(new Date());
+    return user;
+  }
+
+  private void convertVoToEntity(UserVo vo, UserEntity user) {
+    user.setId(vo.getId());
     user.setName(vo.getName());
     user.setGender(vo.getGender());
     user.setBirthday(vo.getBirthday());
     user.setAddress(vo.getAddress());
-    user.setCreateTime(new Date());
-    return user;
   }
 
   private void checkInputData(UserVo vo) {

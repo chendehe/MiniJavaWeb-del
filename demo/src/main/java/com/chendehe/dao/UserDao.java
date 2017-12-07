@@ -14,4 +14,6 @@ public interface UserDao {
   void update(UserEntity user);
 
   void delete(String id);
+
+  int totalNum();
 }
