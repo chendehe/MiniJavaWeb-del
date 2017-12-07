@@ -53,7 +53,7 @@ public class UserController {
   @PostMapping("/")
   UserVo save(@RequestBody UserVo userVo) {
     LOGGER.info("[UserController] user is:{}", JSONObject.toJSON(userVo));
-    return service.save(userVo);
+      return service.save(userVo);
   }
 
   /**

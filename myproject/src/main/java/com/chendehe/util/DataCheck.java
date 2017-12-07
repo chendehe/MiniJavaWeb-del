@@ -1,31 +1,15 @@
 package com.chendehe.util;
 
+import com.chendehe.config.Message;
+import com.chendehe.exception.ValidationException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
-import java.util.Locale;
-import javax.validation.ValidationException;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.stereotype.Component;
 
-@Component
 public final class DataCheck {
 
-  private static MessageSource messageSource;
-
   private DataCheck() {
-  }
-
-  /**
-   * 注入静态变量.
-   *
-   * @param messageSource message
-   */
-  @Autowired
-  public void setMessageSource(MessageSource messageSource) {
-    DataCheck.messageSource = messageSource;
   }
 
   /**
@@ -36,7 +20,7 @@ public final class DataCheck {
    */
   private static void checkStrEmpty(String str, String code) {
     if (StringUtils.isEmpty(str)) {
-      throw new ValidationException(messageSource.getMessage(code, null, null, Locale.CHINA));
+      throw new ValidationException(code);
     }
   }
 
@@ -49,7 +33,7 @@ public final class DataCheck {
   public static void checkTrimStrEmpty(String str, String code) {
     checkStrEmpty(str, code);
     if (StringUtils.isEmpty(str.trim())) {
-      throw new ValidationException(messageSource.getMessage(code, null, null, Locale.CHINESE));
+      throw new ValidationException(Message.message(code));
     }
   }
 
