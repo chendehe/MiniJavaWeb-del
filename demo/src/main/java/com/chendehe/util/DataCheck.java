@@ -1,6 +1,5 @@
 package com.chendehe.util;
 
-import com.chendehe.config.Message;
 import com.chendehe.exception.ValidationException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
@@ -18,9 +17,9 @@ public final class DataCheck {
    * @param str 字符串
    * @param code 错误编码
    */
-  private static void checkStrEmpty(String str, String code) throws ValidationException {
+  private static void checkStrEmpty(String str, String code, String... param) {
     if (StringUtils.isEmpty(str)) {
-      throw new ValidationException(code);
+      throw new ValidationException(code, param);
     }
   }
 
@@ -30,10 +29,10 @@ public final class DataCheck {
    * @param str 字符串
    * @param code 错误编码
    */
-  public static void checkTrimStrEmpty(String str, String code) throws ValidationException {
-    checkStrEmpty(str, code);
+  public static void checkTrimStrEmpty(String str, String code, String... param) {
+    checkStrEmpty(str, code, param);
     if (StringUtils.isEmpty(str.trim())) {
-      throw new ValidationException(Message.message(code));
+      throw new ValidationException(code, param);
     }
   }
 
@@ -43,9 +42,9 @@ public final class DataCheck {
    * @param t 对象
    * @param code 错误编码
    */
-  public static <T> void checkNull(T t, String code) throws ValidationException {
+  public static <T> void checkNull(T t, String code, String... param) {
     if (null == t) {
-      throw new ValidationException(code);
+      throw new ValidationException(code, param);
     }
   }
 
@@ -55,9 +54,9 @@ public final class DataCheck {
    * @param c 集合
    * @param code 错误编码
    */
-  public static void checkCollectionEmpty(Collection c, String code) throws ValidationException {
+  public static void checkCollectionEmpty(Collection c, String code, String... param) {
     if (CollectionUtils.isEmpty(c)) {
-      throw new ValidationException(code);
+      throw new ValidationException(code, param);
     }
   }
 
@@ -68,15 +67,15 @@ public final class DataCheck {
    * @param t 枚举对象
    * @param code 错误编码
    */
-  public static <T> void checkEnum(Class<?> c, T t, String code) throws ValidationException {
+  public static <T> void checkEnum(Class<?> c, T t, String code, String... param) {
     try {
       Enum e = (Enum) c.getMethod("forValue", new Class[]{t.getClass()})
           .invoke(c, new Object[]{t});
       if (null == e) {
-        throw new ValidationException(code);
+        throw new ValidationException(code, param);
       }
     } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-      throw new ValidationException(code);
+      throw new ValidationException(code, param);
     }
   }
 }

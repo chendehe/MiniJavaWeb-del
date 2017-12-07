@@ -3,12 +3,10 @@ package com.chendehe.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.chendehe.exception.BaseException;
 import com.chendehe.exception.ExceptionUtils;
-import com.chendehe.exception.ValidationException;
 import com.chendehe.service.UserService;
 import com.chendehe.vo.Page;
 import com.chendehe.vo.PageResult;
 import com.chendehe.vo.UserVo;
-import com.fasterxml.jackson.databind.ser.Serializers.Base;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +36,13 @@ public class UserController {
   @GetMapping("/list")
   PageResult<UserVo> findAll(Page page) {
     LOGGER.info("[UserController] id is:{}", page);
-    PageResult<UserVo> result = service.findAll(page);
-    return result;
+    try {
+      PageResult<UserVo> result = service.findAll(page);
+      return result;
+    } catch (BaseException e) {
+      ExceptionUtils.exception(e);
+    }
+    return null;
   }
 
   /**
@@ -48,7 +51,12 @@ public class UserController {
   @GetMapping("/{id}")
   UserVo findOne(@PathVariable String id) {
     LOGGER.info("[UserController] id is:{}", id);
-    return service.findOne(id);
+    try {
+      return service.findOne(id);
+    } catch (BaseException e) {
+      ExceptionUtils.exception(e);
+    }
+    return null;
   }
 
   /**
@@ -59,8 +67,8 @@ public class UserController {
     LOGGER.info("[UserController] user is:{}", JSONObject.toJSON(userVo));
     try {
       return service.save(userVo);
-    } catch (ValidationException e) {
-      ExceptionUtils.exception(e.getMessage());
+    } catch (BaseException e) {
+      ExceptionUtils.exception(e);
     }
     return null;
   }
@@ -74,8 +82,8 @@ public class UserController {
     userVo.setId(id);
     try {
       return service.update(userVo);
-    } catch (BaseException e) {
-      ExceptionUtils.exception(e.getErrorCode());
+    } catch (Exception e) {
+      ExceptionUtils.exception(e);
     }
     return null;
   }
@@ -86,10 +94,15 @@ public class UserController {
   @DeleteMapping("/{id}")
   JSONObject delete(@PathVariable String id) {
     LOGGER.info("[UserController] id is:{}", id);
-    service.delete(id);
-    JSONObject json = new JSONObject();
-    json.put("status", "success");
-    return json;
+    try {
+      service.delete(id);
+      JSONObject json = new JSONObject();
+      json.put("status", "success");
+      return json;
+    } catch (BaseException e) {
+      ExceptionUtils.exception(e);
+    }
+    return null;
   }
 
 }

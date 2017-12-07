@@ -130,11 +130,11 @@ public class UserServiceImpl implements UserService {
   }
 
   private void checkInputData(UserVo vo) {
-    DataCheck.checkTrimStrEmpty(vo.getId(), ErrorCode.PARAM_EMPTY);
-    DataCheck.checkTrimStrEmpty(vo.getAddress(), ErrorCode.PARAM_EMPTY);
-    DataCheck.checkTrimStrEmpty(vo.getName(), ErrorCode.PARAM_EMPTY);
-    DataCheck.checkNull(vo.getBirthday(), ErrorCode.PARAM_EMPTY);
-    DataCheck.checkNull(vo.getGender(), ErrorCode.PARAM_EMPTY);
-    DataCheck.checkEnum(GenderEnum.class, vo.getGender(), ErrorCode.PARAM_EMPTY);
+    DataCheck.checkTrimStrEmpty(vo.getAddress(), ErrorCode.PARAM_EMPTY, "address");
+    DataCheck.checkTrimStrEmpty(vo.getId(), ErrorCode.PARAM_EMPTY, "id");
+    DataCheck.checkTrimStrEmpty(vo.getName(), ErrorCode.PARAM_EMPTY, "name");
+    DataCheck.checkNull(vo.getBirthday(), ErrorCode.PARAM_EMPTY, "birthday");
+    DataCheck.checkNull(vo.getGender(), ErrorCode.PARAM_EMPTY, "gender");
+    DataCheck.checkEnum(GenderEnum.class, vo.getGender(), ErrorCode.PARAM_TYPE_ERROR, "gender");
   }
 }

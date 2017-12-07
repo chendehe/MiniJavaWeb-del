@@ -1,19 +1,18 @@
-package com.chendehe.config;
+package com.chendehe.common;
 
-import com.chendehe.common.ErrorCode;
 import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
 @Component
-public final class Message {
+public final class ErrorMessage {
 
   private static final String DEFAULT = "can't find any messages";
 
   private static MessageSource messageSource;
 
-  private Message() {
+  private ErrorMessage() {
   }
 
   /**
@@ -23,7 +22,7 @@ public final class Message {
    */
   @Autowired
   private void setMessageSource(MessageSource messageSource) {
-    Message.messageSource = messageSource;
+    ErrorMessage.messageSource = messageSource;
   }
 
   public static String message(String code, String... params) {
