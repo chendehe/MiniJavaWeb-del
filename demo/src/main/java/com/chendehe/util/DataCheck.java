@@ -18,7 +18,7 @@ public final class DataCheck {
    * @param str 字符串
    * @param code 错误编码
    */
-  private static void checkStrEmpty(String str, String code) {
+  private static void checkStrEmpty(String str, String code) throws ValidationException {
     if (StringUtils.isEmpty(str)) {
       throw new ValidationException(code);
     }
@@ -30,7 +30,7 @@ public final class DataCheck {
    * @param str 字符串
    * @param code 错误编码
    */
-  public static void checkTrimStrEmpty(String str, String code) {
+  public static void checkTrimStrEmpty(String str, String code) throws ValidationException {
     checkStrEmpty(str, code);
     if (StringUtils.isEmpty(str.trim())) {
       throw new ValidationException(Message.message(code));
@@ -43,7 +43,7 @@ public final class DataCheck {
    * @param t 对象
    * @param code 错误编码
    */
-  public static <T> void checkNull(T t, String code) {
+  public static <T> void checkNull(T t, String code) throws ValidationException {
     if (null == t) {
       throw new ValidationException(code);
     }
@@ -55,7 +55,7 @@ public final class DataCheck {
    * @param c 集合
    * @param code 错误编码
    */
-  public static void checkCollectionEmpty(Collection c, String code) {
+  public static void checkCollectionEmpty(Collection c, String code) throws ValidationException {
     if (CollectionUtils.isEmpty(c)) {
       throw new ValidationException(code);
     }
@@ -68,7 +68,7 @@ public final class DataCheck {
    * @param t 枚举对象
    * @param code 错误编码
    */
-  public static <T> void checkEnum(Class<?> c, T t, String code) {
+  public static <T> void checkEnum(Class<?> c, T t, String code) throws ValidationException {
     try {
       Enum e = (Enum) c.getMethod("forValue", new Class[]{t.getClass()})
           .invoke(c, new Object[]{t});

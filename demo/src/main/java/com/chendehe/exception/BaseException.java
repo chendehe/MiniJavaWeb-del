@@ -2,11 +2,12 @@ package com.chendehe.exception;
 
 import com.chendehe.config.Message;
 
-public class BaseException extends Exception {
+public class BaseException extends RuntimeException {
+
   private String errorCode;
 
   public BaseException(String errorCode) {
-    super(errorCode);
+    super(Message.message(errorCode));
     this.errorCode = errorCode;
   }
 

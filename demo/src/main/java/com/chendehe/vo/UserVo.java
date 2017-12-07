@@ -7,7 +7,7 @@ public class UserVo {
 
   private String id;
   private String name;
-  private int gender;
+  private Integer gender;
   private Date birthday;
   private String address;
 
@@ -27,11 +27,11 @@ public class UserVo {
     this.name = name;
   }
 
-  public int getGender() {
+  public Integer getGender() {
     return gender;
   }
 
-  public void setGender(int gender) {
+  public void setGender(Integer gender) {
     this.gender = gender;
   }
 

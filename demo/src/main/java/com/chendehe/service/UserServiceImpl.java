@@ -1,6 +1,7 @@
 package com.chendehe.service;
 
 import com.chendehe.common.ErrorCode;
+import com.chendehe.common.enums.GenderEnum;
 import com.chendehe.dao.UserDao;
 import com.chendehe.entity.UserEntity;
 import com.chendehe.util.DataCheck;
@@ -53,7 +54,7 @@ public class UserServiceImpl implements UserService {
     //binder.setValidator(new UserValidator());
     //binder.validate();
 
-    DataCheck.checkTrimStrEmpty(vo.getAddress(), ErrorCode.ADDRESS_EMPTY);
+    checkInputData(vo);
 
     UserEntity entity = convertVoToEntity(vo);
     userDao.save(entity);
@@ -64,6 +65,9 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public UserVo update(UserVo vo) {
+
+    checkInputData(vo);
+
     UserEntity user = convertVoToEntityUpdate(vo);
 
     userDao.update(user);
@@ -123,5 +127,14 @@ public class UserServiceImpl implements UserService {
     user.setAddress(vo.getAddress());
     user.setCreateTime(new Date());
     return user;
+  }
+
+  private void checkInputData(UserVo vo) {
+    DataCheck.checkTrimStrEmpty(vo.getId(), ErrorCode.PARAM_EMPTY);
+    DataCheck.checkTrimStrEmpty(vo.getAddress(), ErrorCode.PARAM_EMPTY);
+    DataCheck.checkTrimStrEmpty(vo.getName(), ErrorCode.PARAM_EMPTY);
+    DataCheck.checkNull(vo.getBirthday(), ErrorCode.PARAM_EMPTY);
+    DataCheck.checkNull(vo.getGender(), ErrorCode.PARAM_EMPTY);
+    DataCheck.checkEnum(GenderEnum.class, vo.getGender(), ErrorCode.PARAM_EMPTY);
   }
 }

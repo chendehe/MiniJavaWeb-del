@@ -1,10 +1,14 @@
 package com.chendehe.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.chendehe.exception.BaseException;
+import com.chendehe.exception.ExceptionUtils;
+import com.chendehe.exception.ValidationException;
 import com.chendehe.service.UserService;
 import com.chendehe.vo.Page;
 import com.chendehe.vo.PageResult;
 import com.chendehe.vo.UserVo;
+import com.fasterxml.jackson.databind.ser.Serializers.Base;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +57,12 @@ public class UserController {
   @PostMapping("/")
   UserVo save(@RequestBody UserVo userVo) {
     LOGGER.info("[UserController] user is:{}", JSONObject.toJSON(userVo));
-    return service.save(userVo);
+    try {
+      return service.save(userVo);
+    } catch (ValidationException e) {
+      ExceptionUtils.exception(e.getMessage());
+    }
+    return null;
   }
 
   /**
@@ -63,7 +72,12 @@ public class UserController {
   UserVo update(@RequestBody UserVo userVo, @PathVariable String id) {
     LOGGER.info("[UserController] user is:{}, id is:{}", JSONObject.toJSON(userVo), id);
     userVo.setId(id);
-    return service.update(userVo);
+    try {
+      return service.update(userVo);
+    } catch (BaseException e) {
+      ExceptionUtils.exception(e.getErrorCode());
+    }
+    return null;
   }
 
   /**
