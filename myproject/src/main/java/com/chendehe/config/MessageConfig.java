@@ -19,6 +19,7 @@ public class MessageConfig {
   public MessageSource getMessage() {
     ResourceBundleMessageSource source = new ResourceBundleMessageSource();
     source.setBasenames("i18/messages");
+    source.setDefaultEncoding("utf-8");
     return source;
   }
 }

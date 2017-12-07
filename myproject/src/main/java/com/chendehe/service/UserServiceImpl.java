@@ -1,7 +1,9 @@
 package com.chendehe.service;
 
+import com.chendehe.common.ErrorCode;
 import com.chendehe.dao.UserDao;
 import com.chendehe.entity.UserEntity;
+import com.chendehe.util.DataCheck;
 import com.chendehe.util.IdGenerator;
 import com.chendehe.vo.Page;
 import com.chendehe.vo.PageResult;
@@ -50,6 +52,8 @@ public class UserServiceImpl implements UserService {
     //DataBinder binder = new DataBinder(vo);
     //binder.setValidator(new UserValidator());
     //binder.validate();
+
+    DataCheck.checkTrimStrEmpty(vo.getAddress(), ErrorCode.ADDRESS_EMPTY);
 
     UserEntity entity = convertVoToEntity(vo);
     userDao.save(entity);
