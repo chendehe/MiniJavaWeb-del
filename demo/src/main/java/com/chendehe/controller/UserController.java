@@ -1,6 +1,8 @@
 package com.chendehe.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.chendehe.exception.BaseException;
+import com.chendehe.exception.ExceptionUtils;
 import com.chendehe.service.UserService;
 import com.chendehe.vo.Page;
 import com.chendehe.vo.PageResult;
@@ -34,8 +36,13 @@ public class UserController {
   @GetMapping("/list")
   PageResult<UserVo> findAll(Page page) {
     LOGGER.info("[UserController] id is:{}", page);
-    PageResult<UserVo> result = service.findAll(page);
-    return result;
+    try {
+      PageResult<UserVo> result = service.findAll(page);
+      return result;
+    } catch (BaseException e) {
+      ExceptionUtils.exception(e);
+    }
+    return null;
   }
 
   /**
@@ -44,7 +51,12 @@ public class UserController {
   @GetMapping("/{id}")
   UserVo findOne(@PathVariable String id) {
     LOGGER.info("[UserController] id is:{}", id);
-    return service.findOne(id);
+    try {
+      return service.findOne(id);
+    } catch (BaseException e) {
+      ExceptionUtils.exception(e);
+    }
+    return null;
   }
 
   /**
@@ -53,7 +65,12 @@ public class UserController {
   @PostMapping("/")
   UserVo save(@RequestBody UserVo userVo) {
     LOGGER.info("[UserController] user is:{}", JSONObject.toJSON(userVo));
+    try {
       return service.save(userVo);
+    } catch (BaseException e) {
+      ExceptionUtils.exception(e);
+    }
+    return null;
   }
 
   /**
@@ -63,7 +80,12 @@ public class UserController {
   UserVo update(@RequestBody UserVo userVo, @PathVariable String id) {
     LOGGER.info("[UserController] user is:{}, id is:{}", JSONObject.toJSON(userVo), id);
     userVo.setId(id);
-    return service.update(userVo);
+    try {
+      return service.update(userVo);
+    } catch (Exception e) {
+      ExceptionUtils.exception(e);
+    }
+    return null;
   }
 
   /**
@@ -72,10 +94,15 @@ public class UserController {
   @DeleteMapping("/{id}")
   JSONObject delete(@PathVariable String id) {
     LOGGER.info("[UserController] id is:{}", id);
-    service.delete(id);
-    JSONObject json = new JSONObject();
-    json.put("status", "success");
-    return json;
+    try {
+      service.delete(id);
+      JSONObject json = new JSONObject();
+      json.put("status", "success");
+      return json;
+    } catch (BaseException e) {
+      ExceptionUtils.exception(e);
+    }
+    return null;
   }
 
 }

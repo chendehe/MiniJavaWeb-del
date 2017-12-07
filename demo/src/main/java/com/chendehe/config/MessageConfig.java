@@ -13,7 +13,7 @@ public class MessageConfig {
 
   /**
    * 国际化处理.
-   * @return
+   * @return messageSource
    */
   @Bean("messageSource")
   public MessageSource getMessage() {
