@@ -5,6 +5,7 @@ CREATE TABLE `t_user` (
 `birthday`  timestamp,
 `address`  varchar(255),
 `create_time`  datetime,
+`update_time`  datetime,
 PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
