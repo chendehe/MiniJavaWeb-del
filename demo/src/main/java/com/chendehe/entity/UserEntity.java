@@ -1,103 +1,95 @@
 package com.chendehe.entity;
 
+import com.google.common.base.Objects;
 import java.io.Serializable;
 import java.util.Date;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class UserEntity implements Serializable {
 
-    private static final long serialVersionUID = -2535178899662614143L;
-    private String id;
-    private String name;
-    private int sex;
-    private Date birthday;
-    private String address;
-    private Date createTime;
+  private static final long serialVersionUID = -2535178899662614143L;
+  private String id;
+  private String name;
+  private int gender;
+  private Date birthday;
+  private String address;
+  private Date createTime;
+  private Date updateTime;
 
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", sex=" + sex +
-                ", birthday=" + birthday +
-                ", address='" + address + '\'' +
-                ", createTime=" + createTime +
-                '}';
-    }
+  public Date getUpdateTime() {
+    return updateTime;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+  public void setUpdateTime(Date updateTime) {
+    this.updateTime = updateTime;
+  }
 
-        UserEntity that = (UserEntity) o;
+  public Date getCreateTime() {
 
-        if (sex != that.sex) return false;
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
-        if (address != null ? !address.equals(that.address) : that.address != null) return false;
-        return createTime != null ? createTime.equals(that.createTime) : that.createTime == null;
-    }
+    return createTime;
+  }
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + sex;
-        result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
-        return result;
-    }
+  public void setCreateTime(Date createTime) {
+    this.createTime = createTime;
+  }
 
-    public Date getCreateTime() {
+  public String getId() {
+    return id;
+  }
 
-        return createTime;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public int getGender() {
+    return gender;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setGender(int gender) {
+    this.gender = gender;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public Date getBirthday() {
+    return birthday;
+  }
 
-    public int getSex() {
-        return sex;
-    }
+  public void setBirthday(Date birthday) {
+    this.birthday = birthday;
+  }
 
-    public void setSex(int sex) {
-        this.sex = sex;
-    }
+  public String getAddress() {
+    return address;
+  }
 
-    public Date getBirthday() {
-        return birthday;
-    }
+  public void setAddress(String address) {
+    this.address = address;
+  }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
 
-    public String getAddress() {
-        return address;
-    }
+  @Override
+  public String toString() {
+    // java-Objects.toString(),guava-MoreObjects.toStringHelper()
+    return ToStringBuilder.reflectionToString(this);
+  }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+  @Override
+  public boolean equals(Object o) {
+    // Apache Commons Lang3-EqualsBuilder
+    return Objects.equal(this, o);
+  }
+
+  @Override
+  public int hashCode() {
+    // Apache Commons Lang3-HashCodeBuilder
+    return Objects.hashCode(this);
+  }
 
 }
