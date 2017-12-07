@@ -8,7 +8,7 @@ public class PageResult<T> extends Page {
   // 总数
   private Integer totalNum;
 
-  private List list;
+  private List<T> list;
 
   public Integer getTotalNum() {
     return totalNum;

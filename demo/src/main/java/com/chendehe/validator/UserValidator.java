@@ -1,4 +1,4 @@
-package com.chendehe.vo.validator;
+package com.chendehe.validator;
 
 import com.chendehe.vo.UserVo;
 import org.slf4j.Logger;
