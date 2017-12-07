@@ -1,1 +1,0 @@
-spring boot and mybatis with annotation
