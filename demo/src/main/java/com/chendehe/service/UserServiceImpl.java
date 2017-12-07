@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
       userVoList.add(convertEntityToVo(user));
     }
     result.setList(userVoList);
-    result.setTotalNum(11);
+    result.setTotalNum(userDao.totalNum());
     result.setPageSize(page.getPageSize());
     result.setCurrentPage(page.getCurrentPage());
     return result;
