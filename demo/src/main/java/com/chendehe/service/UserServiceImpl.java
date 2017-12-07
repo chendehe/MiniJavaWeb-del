@@ -54,10 +54,10 @@ public class UserServiceImpl implements UserService {
     //DataBinder binder = new DataBinder(vo);
     //binder.setValidator(new UserValidator());
     //binder.validate();
+    vo.setId(IdGenerator.get());
 
     checkInputData(vo);
 
-    vo.setId(IdGenerator.get());
     UserEntity entity = convertVoToEntitySave(vo);
     userDao.save(entity);
 
