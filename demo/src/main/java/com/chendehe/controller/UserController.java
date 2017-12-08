@@ -5,7 +5,6 @@ import com.chendehe.exception.BaseException;
 import com.chendehe.exception.ResultUtil;
 import com.chendehe.service.UserService;
 import com.chendehe.vo.Page;
-import com.chendehe.vo.PageResult;
 import com.chendehe.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,11 +32,10 @@ public class UserController {
   }
 
   /**
-   * 查找列表.
-   * 成功返回200.
+   * 查找列表. 成功返回200.
    */
   @GetMapping("/list")
-  ResponseEntity<PageResult<UserVo>> findAll(Page page) {
+  ResponseEntity findAll(Page page) {
     LOGGER.info("[UserController] id is:{}", page);
     try {
       return ResultUtil.success(service.findAll(page), HttpStatus.OK);
@@ -47,11 +45,10 @@ public class UserController {
   }
 
   /**
-   * 查找详情.
-   * 成功返回200.
+   * 查找详情. 成功返回200.
    */
   @GetMapping("/{id}")
-  ResponseEntity<UserVo> findOne(@PathVariable String id) {
+  ResponseEntity findOne(@PathVariable String id) {
     LOGGER.info("[UserController] id is:{}", id);
     try {
       return ResultUtil.success(service.findOne(id), HttpStatus.OK);
@@ -61,11 +58,10 @@ public class UserController {
   }
 
   /**
-   * 新建.
-   * 成功返回201.
+   * 新建. 成功返回201.
    */
   @PostMapping("/")
-  ResponseEntity<UserVo> save(@RequestBody UserVo userVo) {
+  ResponseEntity save(@RequestBody UserVo userVo) {
     LOGGER.info("[UserController] user is:{}", JSONObject.toJSON(userVo));
     try {
       return ResultUtil.success(service.save(userVo), HttpStatus.CREATED);
@@ -75,11 +71,10 @@ public class UserController {
   }
 
   /**
-   * 更新.
-   * 成功返回201.
+   * 更新. 成功返回201.
    */
   @PutMapping("/{id}")
-  ResponseEntity<UserVo> update(@RequestBody UserVo userVo, @PathVariable String id) {
+  ResponseEntity update(@RequestBody UserVo userVo, @PathVariable String id) {
     LOGGER.info("[UserController] user is:{}, id is:{}", JSONObject.toJSON(userVo), id);
     userVo.setId(id);
     try {
@@ -90,11 +85,10 @@ public class UserController {
   }
 
   /**
-   * 删除.
-   * 成功返回204.
+   * 删除. 成功返回204.
    */
   @DeleteMapping("/{id}")
-  ResponseEntity<JSONObject> delete(@PathVariable String id) {
+  ResponseEntity delete(@PathVariable String id) {
     LOGGER.info("[UserController] id is:{}", id);
     try {
       service.delete(id);
