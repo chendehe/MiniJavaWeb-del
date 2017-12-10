@@ -1,0 +1,28 @@
+centOS7 64位
+jdk1.9
+mysql5.7，
+1、清除yum里所有mysql依赖包，yum remove mysql-libs
+2、安装：rpm -ivh mysql-community-libs-5.7.9-1.el7.x86_64.rpm mysql-community-client-5.7.9-1.el7.x86_64.rpm mysql-community-common-5.7.9-1.el7.x86_64.rpm mysql-community-server-5.7.9-1.el7.x86_64.rpm
+查看mysql安装文档：https://dev.mysql.com/doc/refman/5.7/en/linux-installation-rpm.html
+3、解决Navicat 报错:1130-host ... is not allowed to connect to this MySql server,MySQL不允许从远程访问的方法。
+查看：https://www.cnblogs.com/shyy/archive/2012/03/30/2453034.html
+	1、GRANT ALL PRIVILEGES ON *.* TO 'chendehe'@'%' IDENTIFIED BY 'Chendehe1!' WITH GRANT OPTION;
+	2、FLUSH PRIVILEGES;
+3、更新密码：
+用mysqladmin 
+例子：mysqladmin -uroot -pchendehe password Chendehe1!
+
+#rpm -ivh aaa.rpm
+
+安装Nginx包，按顺序安装，参考：http://blog.csdn.net/grhlove123/article/details/47834673
+openssl、zlib、gcc-c++、pcre, 然后安装Nginx包。
+#tar xvf aaa.tar.gz
+#./config && make && make install
+#./configure && make && make install
+
+cd /usr/local/nginx/sbin
+ps:
+启动：/usr/local/nginx/sbin/nginx
+停止/重新加载：/usr/local/nginx/sbin/nginx -s stop(quit、reload)
+验证配置文件是否合法：/usr/local/nginx/sbin/nginx -t
+命令帮助：/usr/local/nginx/sbin/nginx -h
