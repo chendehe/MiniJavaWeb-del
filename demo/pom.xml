@@ -95,6 +95,14 @@
           <!-- see configurations in settings.xml-->
         </configuration>
       </plugin>
+      <plugin>
+        <!-- 打包成可执行的jar -->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <fork>true</fork>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>
