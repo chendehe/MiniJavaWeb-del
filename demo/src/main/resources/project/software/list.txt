@@ -26,3 +26,18 @@ ps:
 停止/重新加载：/usr/local/nginx/sbin/nginx -s stop(quit、reload)
 验证配置文件是否合法：/usr/local/nginx/sbin/nginx -t
 命令帮助：/usr/local/nginx/sbin/nginx -h
+
+
+Redis安装：http://www.redis.cn/download.html
+Codis安装：https://github.com/CodisLabs/codis/blob/release3.2/doc/tutorial_zh.md
+	Go环境安装：
+	1、tar包解压到/usr1/tools, 并创建目录/usr1/tools/go
+	tar xvf go1.9.2.linux-amd64.tar.gz
+	2、添加/usr1/tools/go/bin到环境变量/etc/profile
+	export PATH=$PATH:/usr1/tools/go/bin
+	go version查看安装是否成功
+	3、安装git：yum install -y git
+	4、到go的这个src/github.com/CodisLabs/目录git clone https://github.com/CodisLabs/codis.git -b release3.2
+	4、安装：yum install autoconf
+
+

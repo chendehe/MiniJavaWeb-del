@@ -6,6 +6,11 @@ spring:
     password: Chendehe1!
     # 配置druid数据源，否则MybatisConfig找不到DataSource
     type: com.alibaba.druid.pool.DruidDataSource
+
+jedis:
+  host: 192.168.111.128
+  port: 6379
+
 server:
   port: 1111
 logging:
