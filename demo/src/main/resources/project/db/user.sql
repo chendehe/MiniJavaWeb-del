@@ -1,5 +1,5 @@
 CREATE TABLE `t_user` (
-`id`  char(32),
+`id`  char(36),
 `name`  varchar(10),
 `gender`  tinyint(4),
 `birthday`  timestamp,
@@ -14,7 +14,7 @@ ROW_FORMAT=DYNAMIC
 ;
 
 CREATE TABLE `t_student` (
-`id`  char(32),
+`id`  char(36),
 `school`  varchar(30),
 `academy`  varchar(30),
 `major`  varchar(30),
