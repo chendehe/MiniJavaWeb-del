@@ -3,6 +3,7 @@ package com.chendehe.service;
 import com.chendehe.common.ErrorCode;
 import com.chendehe.common.MyConstant;
 import com.chendehe.common.enums.GenderEnum;
+import com.chendehe.dao.StudentDao;
 import com.chendehe.dao.UserDao;
 import com.chendehe.entity.StudentEntity;
 import com.chendehe.entity.UserEntity;
@@ -33,6 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -41,10 +43,12 @@ public class UserServiceImpl implements UserService {
   private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
   private UserDao userDao;
+  private StudentDao studentDao;
 
   @Autowired
-  public UserServiceImpl(UserDao userDao) {
+  public UserServiceImpl(UserDao userDao, StudentDao studentDao) {
     this.userDao = userDao;
+    this.studentDao = studentDao;
   }
 
   @Override
@@ -70,6 +74,7 @@ public class UserServiceImpl implements UserService {
     return convertEntityToVo(userDao.findOne(id));
   }
 
+  @Transactional
   @Override
   public UserVo save(UserVo vo) {
     //data bind if need validator
@@ -86,6 +91,7 @@ public class UserServiceImpl implements UserService {
     return vo;
   }
 
+  @Transactional
   @Override
   public UserVo update(UserVo vo) {
 
@@ -97,12 +103,14 @@ public class UserServiceImpl implements UserService {
     return vo;
   }
 
+  @Transactional
   @Override
   public void delete(String id) {
     DataCheck.checkTrimStrEmpty(id, ErrorCode.PARAM_EMPTY, "id");
     userDao.delete(id);
   }
 
+  @Transactional
   @Override
   public void upload(MultipartFile file) {
     long start = System.currentTimeMillis();
@@ -148,6 +156,7 @@ public class UserServiceImpl implements UserService {
     LOGGER.info("[UserServiceImpl] Total end:{}", end - start);
   }
 
+  @Transactional
   @Override
   public void downLoad(String id) {
 
@@ -216,7 +225,7 @@ public class UserServiceImpl implements UserService {
     DataCheck.checkEnum(GenderEnum.class, vo.getGender(), ErrorCode.PARAM_TYPE_ERROR, "gender");
   }
 
-  private static void barrierWait(CyclicBarrier barrier) {
+  private void barrierWait(CyclicBarrier barrier) {
     try {
       LOGGER.info("[UserServiceImpl] waiting... {}", barrier.getNumberWaiting());
       barrier.await(MyConstant.BARRIER_TIMEOUT, TimeUnit.SECONDS);
@@ -244,7 +253,7 @@ public class UserServiceImpl implements UserService {
     });
   }
 
-  private static void parseUser(Sheet sh) {
+  private void parseUser(Sheet sh) {
     List<UserEntity> users = Lists.newArrayList();
     UserEntity user;
 
@@ -269,9 +278,10 @@ public class UserServiceImpl implements UserService {
       users.add(user);
     }
     LOGGER.info("[UserServiceImpl] save user in db... :{}", users.size());
+    userDao.saveBatch(users);
   }
 
-  private static void parseStudent(Sheet sh) {
+  private void parseStudent(Sheet sh) {
     List<StudentEntity> students = Lists.newArrayList();
     StudentEntity student;
 
@@ -296,5 +306,6 @@ public class UserServiceImpl implements UserService {
       students.add(student);
     }
     LOGGER.info("[UserServiceImpl] save student in db... :{}", students.size());
+    studentDao.saveBatch(students);
   }
 }

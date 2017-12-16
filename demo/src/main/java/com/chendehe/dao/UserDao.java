@@ -11,6 +11,8 @@ public interface UserDao extends BaseDao {
 
   void save(UserEntity user);
 
+  void saveBatch(List<UserEntity> user);
+
   void update(UserEntity user);
 
   void delete(String id);
