@@ -4,7 +4,7 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
-public class Test1 {
+public class TestThread {
   public static void main(String[] args) throws ExecutionException, InterruptedException {
     System.out.println("start");
     CyclicBarrier barrier = new CyclicBarrier(3);
@@ -25,14 +25,14 @@ public class Test1 {
       return "f11111";
     });
     new Thread(f1, "First call").start();
-//    System.out.println("First call... end" + f1.get());
 
     FutureTask<String> f2 = new FutureTask<>(() -> {
       futureRun();
       return "f22222";
     });
     new Thread(f2, "Second call").start();
-//    System.out.println("Second call... end" + f2.get());
+    System.out.println("First call... end" + f1.get());
+    System.out.println("Second call... end" + f2.get());
 
     System.out.println("Other functions...");
   }

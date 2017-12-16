@@ -1,6 +1,5 @@
 package com.chendehe.entity;
 
-import com.google.common.base.Objects;
 import java.io.Serializable;
 import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -75,14 +74,6 @@ public class StudentEntity implements Serializable {
 
   @Override
   public String toString() {
-    return "StudentEntity{" +
-        "id='" + id + '\'' +
-        ", school='" + school + '\'' +
-        ", academy='" + academy + '\'' +
-        ", major='" + major + '\'' +
-        ", classes='" + classes + '\'' +
-        ", createTime=" + createTime +
-        ", updateTime=" + updateTime +
-        '}';
+    return ToStringBuilder.reflectionToString(this);
   }
 }

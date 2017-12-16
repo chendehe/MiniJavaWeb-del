@@ -17,6 +17,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -106,6 +110,7 @@ public class UserServiceImpl implements UserService {
 
     //屏障，加上主线程
     final CyclicBarrier barrier = new CyclicBarrier(MyConstant.SHEET_NUMBER + 1);
+    final ExecutorService exe = Executors.newFixedThreadPool(MyConstant.SHEET_NUMBER);
     try {
       //Excel文件工厂
       Workbook wb = WorkbookFactory.create(file.getInputStream());
@@ -114,28 +119,29 @@ public class UserServiceImpl implements UserService {
       LOGGER.info("[UserServiceImpl] Create wb:{}", wbTime - start);
 
       //解析每个sheet
+      List<Future> futures = Lists.newArrayList();
       for (int i = 0; i < MyConstant.SHEET_NUMBER; i++) {
-        String sheetName = wb.getSheetAt(i).getSheetName();
-        int index = i;
-        new Thread(() -> {
-          if (MyConstant.SHEET_USER.equals(sheetName.trim())) {
-            parseUser(wb.getSheetAt(index));
-
-            barrierWait(barrier);
-          } else if (MyConstant.SHEET_STUDENT.equals(sheetName.trim())) {
-            parseStudent(wb.getSheetAt(index));
-
-            barrierWait(barrier);
-          }
-        }, "parse " + sheetName).start();
+        futures.add(parseThread(exe, barrier, wb, i));
       }
 
+      //主线程
       barrierWait(barrier);
-    } catch (IOException | InvalidFormatException e) {
+
+      //循环结果，处理异常
+      for (Future future : futures) {
+        future.get();
+      }
+
+    } catch (IOException | InvalidFormatException | InterruptedException | ExecutionException e) {
       LOGGER.error("[UserServiceImpl] {}", e);
-      throw new ValidationException(ErrorCode.BARRIER_ERROR);
+      throw new ValidationException(ErrorCode.EXCEL_PARSE_ERROR);
     } finally {
+      //reset栅栏
       barrier.reset();
+      //尝试关闭，但不一定关闭,isShutdown标志位变成true
+      if (!exe.isShutdown()) {
+        exe.shutdownNow();
+      }
     }
 
     long end = System.currentTimeMillis();
@@ -223,8 +229,24 @@ public class UserServiceImpl implements UserService {
     }
   }
 
+  private Future parseThread(ExecutorService exe, CyclicBarrier barrier, Workbook wb, int i) {
+    String sheetName = wb.getSheetAt(i).getSheetName();
+    return exe.submit(() -> {
+      try {
+        if (MyConstant.SHEET_USER.equals(sheetName.trim())) {
+          parseUser(wb.getSheetAt(i));
+        } else if (MyConstant.SHEET_STUDENT.equals(sheetName.trim())) {
+          parseStudent(wb.getSheetAt(i));
+        }
+      } finally {
+        barrierWait(barrier);
+      }
+    });
+  }
+
   private static void parseUser(Sheet sh) {
     List<UserEntity> users = Lists.newArrayList();
+    UserEntity user;
 
     boolean firstIn = true;
     for (Row row : sh) {
@@ -237,7 +259,7 @@ public class UserServiceImpl implements UserService {
         break;
       }
 
-      UserEntity user = new UserEntity();
+      user = new UserEntity();
       user.setId(IdGenerator.get());
       user.setName(row.getCell(0).getStringCellValue());
       user.setGender((int) row.getCell(1).getNumericCellValue());
@@ -251,6 +273,7 @@ public class UserServiceImpl implements UserService {
 
   private static void parseStudent(Sheet sh) {
     List<StudentEntity> students = Lists.newArrayList();
+    StudentEntity student;
 
     boolean firstIn = true;
     for (Row row : sh) {
@@ -263,7 +286,7 @@ public class UserServiceImpl implements UserService {
         break;
       }
 
-      StudentEntity student = new StudentEntity();
+      student = new StudentEntity();
       student.setId(IdGenerator.get());
       student.setSchool(row.getCell(0).getStringCellValue());
       student.setAcademy(row.getCell(1).getStringCellValue());
