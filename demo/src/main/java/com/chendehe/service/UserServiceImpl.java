@@ -2,6 +2,7 @@ package com.chendehe.service;
 
 import com.chendehe.common.ErrorCode;
 import com.chendehe.common.MyConstant;
+import com.chendehe.common.enums.FileType;
 import com.chendehe.common.enums.GenderEnum;
 import com.chendehe.dao.StudentDao;
 import com.chendehe.dao.UserDao;
@@ -9,11 +10,13 @@ import com.chendehe.entity.StudentEntity;
 import com.chendehe.entity.UserEntity;
 import com.chendehe.exception.ValidationException;
 import com.chendehe.util.DataCheck;
+import com.chendehe.util.DataConvert;
 import com.chendehe.util.IdGenerator;
 import com.chendehe.vo.Page;
 import com.chendehe.vo.PageResult;
 import com.chendehe.vo.UserVo;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
@@ -24,6 +27,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -119,7 +123,27 @@ public class UserServiceImpl implements UserService {
     //屏障，加上主线程
     final CyclicBarrier barrier = new CyclicBarrier(MyConstant.SHEET_NUMBER + 1);
     final ExecutorService exe = Executors.newFixedThreadPool(MyConstant.SHEET_NUMBER);
-    try {
+    try (InputStream is = file.getInputStream()) {
+
+      //文件格式校验
+      byte[] b = new byte[30];
+      if (is.read(b) <= 0) {
+        LOGGER.error("[UserServiceImpl] file type error");
+        throw new ValidationException(ErrorCode.EXCEL_PARSE_ERROR);
+      }
+      String code = DataConvert.bytes2HexString(b);
+      LOGGER.info("[UserServiceImpl] code:{}", code);
+      String orgFileName = file.getOriginalFilename();
+      String fileType = orgFileName.substring(orgFileName.indexOf('.') + 1);
+      LOGGER.info("[UserServiceImpl] fileType:{}", fileType);
+      String allowType = FileType.forCode(fileType.trim().toLowerCase());
+      if (StringUtils.isEmpty(fileType)
+          || StringUtils.isEmpty(allowType)
+          || !code.startsWith(allowType)) {
+        LOGGER.error("[UserServiceImpl] file type error");
+        throw new ValidationException(ErrorCode.EXCEL_PARSE_ERROR);
+      }
+
       //Excel文件工厂
       Workbook wb = WorkbookFactory.create(file.getInputStream());
 
@@ -278,7 +302,7 @@ public class UserServiceImpl implements UserService {
       users.add(user);
     }
     LOGGER.info("[UserServiceImpl] save user in db... :{}", users.size());
-    userDao.saveBatch(users);
+    //userDao.saveBatch(users);
   }
 
   private void parseStudent(Sheet sh) {
@@ -306,6 +330,6 @@ public class UserServiceImpl implements UserService {
       students.add(student);
     }
     LOGGER.info("[UserServiceImpl] save student in db... :{}", students.size());
-    studentDao.saveBatch(students);
+    //studentDao.saveBatch(students);
   }
 }
