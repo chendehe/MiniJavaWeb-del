@@ -6,6 +6,8 @@ import com.chendehe.exception.ResultUtil;
 import com.chendehe.service.UserService;
 import com.chendehe.vo.Page;
 import com.chendehe.vo.UserVo;
+import java.io.IOException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class UserController {
@@ -100,4 +105,32 @@ public class UserController {
     }
   }
 
+
+  /**
+   * Excel上传. 成功返回204.
+   */
+  @PostMapping("/upLoad")
+  ResponseEntity upLoad(@RequestParam("file") MultipartFile file) {
+    try {
+      LOGGER.info("file path:{}", file.isEmpty());
+
+      if (!file.isEmpty()) {
+        service.upload(file);
+      }
+
+      JSONObject json = new JSONObject();
+      json.put("status", "success");
+      return ResultUtil.success(json, HttpStatus.NO_CONTENT);
+    } catch (BaseException | IOException | InvalidFormatException e) {
+      return ResultUtil.exception(e, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  /**
+   * Excel下载. 成功返回204.
+   */
+  @PostMapping("/downLoad")
+  public String onSubmit(@RequestPart("file-data") MultipartFile file) {
+    return null;
+  }
 }
