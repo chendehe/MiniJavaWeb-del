@@ -12,7 +12,7 @@ public class ForkJoinExcel extends RecursiveTask<Workbook> {
 
   private List<UserEntity> users;
   private List<StudentEntity> students;
-  private List<?> list;
+  private volatile List<?> list;
 
   private Workbook wb;
 
