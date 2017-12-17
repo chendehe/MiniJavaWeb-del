@@ -15,8 +15,10 @@ import com.chendehe.util.IdGenerator;
 import com.chendehe.vo.Page;
 import com.chendehe.vo.PageResult;
 import com.chendehe.vo.UserVo;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
@@ -24,6 +26,7 @@ import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -180,10 +183,28 @@ public class UserServiceImpl implements UserService {
     LOGGER.info("[UserServiceImpl] Total end:{}", end - start);
   }
 
-  @Transactional
   @Override
-  public void downLoad(String id) {
+  public void downLoad(String id, String path) {
 
+    long start = System.currentTimeMillis();
+    LOGGER.info("[UserServiceImpl] start:{}", start);
+
+    List<UserEntity> users = userDao.findAll();
+    List<StudentEntity> students = studentDao.findAll();
+
+    Future<Workbook> result = new ForkJoinPool().submit(new ForkJoinExcel(users, students));
+
+    // 第六步，将文件存到指定位置
+    try (OutputStream os = new FileOutputStream(path)) {
+      Workbook workbook = result.get();
+      workbook.write(os);
+    } catch (IOException | InterruptedException | ExecutionException e) {
+      LOGGER.error("[UserServiceImpl] {}", e);
+      throw new ValidationException(ErrorCode.EXCEL_DOWNLOAD_FAILED);
+    }
+
+    long end = System.currentTimeMillis();
+    LOGGER.info("[UserServiceImpl] Total end:{}", end - start);
   }
 
   /**
@@ -302,7 +323,7 @@ public class UserServiceImpl implements UserService {
       users.add(user);
     }
     LOGGER.info("[UserServiceImpl] save user in db... :{}", users.size());
-    //userDao.saveBatch(users);
+    userDao.saveBatch(users);
   }
 
   private void parseStudent(Sheet sh) {
@@ -330,6 +351,6 @@ public class UserServiceImpl implements UserService {
       students.add(student);
     }
     LOGGER.info("[UserServiceImpl] save student in db... :{}", students.size());
-    //studentDao.saveBatch(students);
+    studentDao.saveBatch(students);
   }
 }

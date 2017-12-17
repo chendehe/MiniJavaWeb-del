@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -107,12 +106,12 @@ public class UserController {
 
 
   /**
-   * Excel上传. 成功返回204.
+   * Excel上传. 成功返回201.
    */
   @PostMapping("/upLoad")
   ResponseEntity upLoad(@RequestParam("file") MultipartFile file) {
     try {
-      LOGGER.info("file path:{}", file.isEmpty());
+      LOGGER.info("[UserController] file path:{}", file.isEmpty());
 
       if (!file.isEmpty()) {
         service.upload(file);
@@ -120,17 +119,25 @@ public class UserController {
 
       JSONObject json = new JSONObject();
       json.put("status", "success");
-      return ResultUtil.success(json, HttpStatus.NO_CONTENT);
+      return ResultUtil.success(json, HttpStatus.CREATED);
     } catch (BaseException | IOException | InvalidFormatException e) {
       return ResultUtil.exception(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   /**
-   * Excel下载. 成功返回204.
+   * Excel下载. 成功返回200.
    */
-  @PostMapping("/downLoad")
-  public String onSubmit(@RequestPart("file-data") MultipartFile file) {
-    return null;
+  @GetMapping("/downLoad")
+  public ResponseEntity downLoad(@RequestParam String id, @RequestParam String path) {
+    LOGGER.info("[UserController] id:{},{}", id, path);
+    try {
+      service.downLoad(id, path);
+      JSONObject json = new JSONObject();
+      json.put("status", "success");
+      return ResultUtil.success(json, HttpStatus.NO_CONTENT);
+    } catch (BaseException e) {
+      return ResultUtil.exception(e, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

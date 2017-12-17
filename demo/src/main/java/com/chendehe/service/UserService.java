@@ -42,6 +42,6 @@ public interface UserService {
   /**
    * 删除.
    */
-  void downLoad(String id);
+  void downLoad(String id, String path);
 
 }
