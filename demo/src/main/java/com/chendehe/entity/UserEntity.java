@@ -80,5 +80,15 @@ public class UserEntity implements Serializable {
     return ToStringBuilder.reflectionToString(this);
   }
 
+  public boolean equals(Object o) {
+    // Apache Commons Lang3-EqualsBuilder
+    return null != o && o instanceof UserEntity && Objects.equal(this, o);
+  }
+
+  @Override
+  public int hashCode() {
+    // Apache Commons Lang3-HashCodeBuilder
+    return Objects.hashCode(this);
+  }
 
 }
