@@ -6,9 +6,10 @@ import com.chendehe.common.enums.FileType;
 import com.chendehe.common.enums.GenderEnum;
 import com.chendehe.dao.StudentDao;
 import com.chendehe.dao.UserDao;
-import com.chendehe.entity.StudentEntity;
 import com.chendehe.entity.UserEntity;
 import com.chendehe.exception.ValidationException;
+import com.chendehe.service.sheet.ForkJoinExcel;
+import com.chendehe.service.sheet.SheetFactory;
 import com.chendehe.util.DataCheck;
 import com.chendehe.util.DataConvert;
 import com.chendehe.util.IdGenerator;
@@ -32,8 +33,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.assertj.core.util.Lists;
@@ -123,30 +122,13 @@ public class UserServiceImpl implements UserService {
     long start = System.currentTimeMillis();
     LOGGER.info("[UserServiceImpl] start:{}", start);
 
-    //屏障，加上主线程
+    //屏障，加上主线程(需要获取结果，可以去掉)
     final CyclicBarrier barrier = new CyclicBarrier(MyConstant.SHEET_NUMBER + 1);
     final ExecutorService exe = Executors.newFixedThreadPool(MyConstant.SHEET_NUMBER);
-    try (InputStream is = file.getInputStream()) {
 
-      //文件格式校验
-      byte[] b = new byte[30];
-      if (is.read(b) <= 0) {
-        LOGGER.error("[UserServiceImpl] file type error");
-        throw new ValidationException(ErrorCode.EXCEL_PARSE_ERROR);
-      }
-      String code = DataConvert.bytes2HexString(b);
-      LOGGER.info("[UserServiceImpl] code:{}", code);
-      String orgFileName = file.getOriginalFilename();
-      String fileType = orgFileName.substring(orgFileName.indexOf('.') + 1);
-      LOGGER.info("[UserServiceImpl] fileType:{}", fileType);
-      String allowType = FileType.forCode(fileType.trim().toLowerCase());
-      if (StringUtils.isEmpty(fileType)
-          || StringUtils.isEmpty(allowType)
-          || !code.startsWith(allowType)) {
-        LOGGER.error("[UserServiceImpl] file type error");
-        throw new ValidationException(ErrorCode.EXCEL_PARSE_ERROR);
-      }
+    validateFileType(file);
 
+    try {
       //Excel文件工厂
       Workbook wb = WorkbookFactory.create(file.getInputStream());
 
@@ -189,16 +171,25 @@ public class UserServiceImpl implements UserService {
     long start = System.currentTimeMillis();
     LOGGER.info("[UserServiceImpl] start:{}", start);
 
-    List<UserEntity> users = userDao.findAll();
-    List<StudentEntity> students = studentDao.findAll();
-
-    Future<Workbook> result = new ForkJoinPool().submit(new ForkJoinExcel(users, students));
+    Future<Workbook> result = new ForkJoinPool().submit(
+        new ForkJoinExcel(
+            userDao.findAll(), studentDao.findAll()
+        ));
 
     // 第六步，将文件存到指定位置
+    Workbook wb;
+    try {
+      if (null == (wb = result.get())) {
+        return;
+      }
+    } catch (InterruptedException | ExecutionException e) {
+      LOGGER.error("[UserServiceImpl] {}", e);
+      throw new ValidationException(ErrorCode.EXCEL_DOWNLOAD_FAILED);
+    }
+
     try (OutputStream os = new FileOutputStream(path)) {
-      Workbook workbook = result.get();
-      workbook.write(os);
-    } catch (IOException | InterruptedException | ExecutionException e) {
+      wb.write(os);
+    } catch (IOException e) {
       LOGGER.error("[UserServiceImpl] {}", e);
       throw new ValidationException(ErrorCode.EXCEL_DOWNLOAD_FAILED);
     }
@@ -270,6 +261,38 @@ public class UserServiceImpl implements UserService {
     DataCheck.checkEnum(GenderEnum.class, vo.getGender(), ErrorCode.PARAM_TYPE_ERROR, "gender");
   }
 
+  /**
+   * 校验文件类型.
+   *
+   * @param file 文件
+   */
+  private void validateFileType(MultipartFile file) {
+    //文件格式校验
+    byte[] b;
+    try (InputStream is = file.getInputStream()) {
+      b = new byte[30];
+      if (is.read(b) <= 0) {
+        LOGGER.error("[UserServiceImpl] file type error");
+        throw new ValidationException(ErrorCode.EXCEL_PARSE_ERROR);
+      }
+    } catch (IOException e) {
+      LOGGER.error("[UserServiceImpl] file type error");
+      throw new ValidationException(ErrorCode.EXCEL_PARSE_ERROR);
+    }
+    String code = DataConvert.bytes2HexString(b);
+    String orgFileName = file.getOriginalFilename();
+    String fileType = orgFileName.substring(orgFileName.indexOf('.') + 1);
+    LOGGER.info("[UserServiceImpl] code:{}, fileType:{}", code, fileType);
+    String allowType = FileType.forCode(fileType.trim().toLowerCase());
+
+    if (StringUtils.isEmpty(fileType)
+        || StringUtils.isEmpty(allowType)
+        || !code.startsWith(allowType)) {
+      LOGGER.error("[UserServiceImpl] file type error");
+      throw new ValidationException(ErrorCode.EXCEL_PARSE_ERROR);
+    }
+  }
+
   private void barrierWait(CyclicBarrier barrier) {
     try {
       LOGGER.info("[UserServiceImpl] waiting... {}", barrier.getNumberWaiting());
@@ -284,73 +307,13 @@ public class UserServiceImpl implements UserService {
   }
 
   private Future parseThread(ExecutorService exe, CyclicBarrier barrier, Workbook wb, int i) {
-    String sheetName = wb.getSheetAt(i).getSheetName();
     return exe.submit(() -> {
       try {
-        if (MyConstant.SHEET_USER.equals(sheetName.trim())) {
-          parseUser(wb.getSheetAt(i));
-        } else if (MyConstant.SHEET_STUDENT.equals(sheetName.trim())) {
-          parseStudent(wb.getSheetAt(i));
-        }
+        new SheetFactory().parseSheet(wb.getSheetAt(i));
       } finally {
         barrierWait(barrier);
       }
     });
   }
 
-  private void parseUser(Sheet sh) {
-    List<UserEntity> users = Lists.newArrayList();
-    UserEntity user;
-
-    boolean firstIn = true;
-    for (Row row : sh) {
-      if (firstIn) {
-        //去掉标题
-        firstIn = false;
-        continue;
-      }
-      if (null == row.getCell(0)) {
-        break;
-      }
-
-      user = new UserEntity();
-      user.setId(IdGenerator.get());
-      user.setName(row.getCell(0).getStringCellValue());
-      user.setGender((int) row.getCell(1).getNumericCellValue());
-      user.setBirthday(row.getCell(2).getDateCellValue());
-      user.setAddress(row.getCell(3).getStringCellValue());
-      user.setCreateTime(new Date());
-      users.add(user);
-    }
-    LOGGER.info("[UserServiceImpl] save user in db... :{}", users.size());
-    userDao.saveBatch(users);
-  }
-
-  private void parseStudent(Sheet sh) {
-    List<StudentEntity> students = Lists.newArrayList();
-    StudentEntity student;
-
-    boolean firstIn = true;
-    for (Row row : sh) {
-      if (firstIn) {
-        //去掉标题
-        firstIn = false;
-        continue;
-      }
-      if (null == row.getCell(0)) {
-        break;
-      }
-
-      student = new StudentEntity();
-      student.setId(IdGenerator.get());
-      student.setSchool(row.getCell(0).getStringCellValue());
-      student.setAcademy(row.getCell(1).getStringCellValue());
-      student.setMajor(row.getCell(2).getStringCellValue());
-      student.setClasses(row.getCell(3).getStringCellValue());
-      student.setCreateTime(new Date());
-      students.add(student);
-    }
-    LOGGER.info("[UserServiceImpl] save student in db... :{}", students.size());
-    studentDao.saveBatch(students);
-  }
 }

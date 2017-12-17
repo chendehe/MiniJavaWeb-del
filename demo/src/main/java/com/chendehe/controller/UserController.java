@@ -127,6 +127,9 @@ public class UserController {
 
   /**
    * Excel下载. 成功返回200.
+   * @param id id
+   * @param path 下载文件本地存放路径
+   * @return 状态
    */
   @GetMapping("/downLoad")
   public ResponseEntity downLoad(@RequestParam String id, @RequestParam String path) {

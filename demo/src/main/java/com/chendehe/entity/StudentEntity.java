@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class StudentEntity implements Serializable {
+public class StudentEntity implements BaseEntity, Serializable {
 
   private static final long serialVersionUID = 1L;
 
