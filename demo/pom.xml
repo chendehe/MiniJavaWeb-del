@@ -116,6 +116,18 @@
       <artifactId>transport</artifactId>
       <version>6.1.1</version>
     </dependency>
+    <!-- netty -->
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-all</artifactId>
+      <version>4.1.6.Final</version>
+    </dependency>
+    <!-- zookeeper -->
+    <dependency>
+      <groupId>org.apache.zookeeper</groupId>
+      <artifactId>zookeeper</artifactId>
+      <version>3.4.11</version>
+    </dependency>
 
     <!-- test -->
     <dependency>
