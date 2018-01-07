@@ -114,7 +114,7 @@ public class ZkConfMgr {
   // 获取值 get /myConf
   // 修改节点 set /myConf/username username321
   // 创建节点 create /Mutex mutex
-  // 删除节点 delete /Mutex/lock-
+  // 删除节点 delete /Mutex/lock- //rmr
   //  ZooKeeper -server host:port cmd args
   //  stat path [watch]
   //  set path data [version]
