@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class UserEntity implements Serializable {
+public class UserEntity implements BaseEntity, Serializable {
 
   private static final long serialVersionUID = -2535178899662614143L;
   private String id;
@@ -80,10 +80,9 @@ public class UserEntity implements Serializable {
     return ToStringBuilder.reflectionToString(this);
   }
 
-  @Override
   public boolean equals(Object o) {
     // Apache Commons Lang3-EqualsBuilder
-    return Objects.equal(this, o);
+    return null != o && o instanceof UserEntity && Objects.equal(this, o);
   }
 
   @Override

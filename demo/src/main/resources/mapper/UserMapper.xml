@@ -46,4 +46,13 @@
     <select id="totalNum" resultType="int">
         select COUNT(*) from t_user
     </select>
+
+    <select id="saveBatch" parameterType="java.util.List">
+      insert into t_user
+      (id, name, gender, birthday, address, create_time, update_time)
+      values
+      <foreach collection="list" item="item" index="index" separator=",">
+        (#{item.id}, #{item.name}, #{item.gender}, #{item.birthday}, #{item.address}, #{item.createTime}, #{item.updateTime})
+      </foreach>
+    </select>
 </mapper>

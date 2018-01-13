@@ -3,9 +3,14 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8
     username: root
-    password: chendehe
+    password: Chendehe1!
     # 配置druid数据源，否则MybatisConfig找不到DataSource
     type: com.alibaba.druid.pool.DruidDataSource
+
+jedis:
+  host: 192.168.111.128
+  port: 6379
+
 server:
   port: 1111
 logging:

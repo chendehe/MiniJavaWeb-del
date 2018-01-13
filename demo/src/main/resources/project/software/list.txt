@@ -1,0 +1,139 @@
+centOS7 64位
+jdk1.9
+=================================================================
+mysql5.7，
+	1、清除yum里所有mysql依赖包，yum remove mysql-libs
+	2、安装：rpm -ivh mysql-community-libs-5.7.9-1.el7.x86_64.rpm mysql-community-client-5.7.9-1.el7.x86_64.rpm mysql-community-common-5.7.9-1.el7.x86_64.rpm mysql-community-server-5.7.9-1.el7.x86_64.rpm
+	查看mysql安装文档：https://dev.mysql.com/doc/refman/5.7/en/linux-installation-rpm.html
+	3、解决Navicat 报错:1130-host ... is not allowed to connect to this MySql server,MySQL不允许从远程访问的方法。
+	查看：https://www.cnblogs.com/shyy/archive/2012/03/30/2453034.html
+		1、GRANT ALL PRIVILEGES ON *.* TO 'chendehe'@'%' IDENTIFIED BY 'Chendehe1!' WITH GRANT OPTION;
+		2、FLUSH PRIVILEGES;
+	3、更新密码：
+	用mysqladmin 
+	例子：mysqladmin -uroot -pchendehe password Chendehe1!
+=================================================================
+命令：#rpm -ivh aaa.rpm #tar xvf aaa.tar.gz
+=================================================================
+安装Nginx包，按顺序安装，参考：http://blog.csdn.net/grhlove123/article/details/47834673
+	openssl、zlib、gcc-c++、pcre, 然后安装Nginx包。
+	#tar xvf aaa.tar.gz
+	#./config && make && make install
+	#./configure && make && make install
+
+	cd /usr/local/nginx/sbin
+	ps:
+	启动：/usr/local/nginx/sbin/nginx
+	停止/重新加载：/usr/local/nginx/sbin/nginx -s stop(quit、reload)
+	验证配置文件是否合法：/usr/local/nginx/sbin/nginx -t
+	命令帮助：/usr/local/nginx/sbin/nginx -h
+
+
+Redis安装：http://www.redis.cn/download.html
+
+Codis安装：https://github.com/CodisLabs/codis/blob/release3.2/doc/tutorial_zh.md
+	Go环境安装：
+	1、tar包解压到/usr1/tools, 并创建目录/usr1/tools/go
+	tar xvf go1.9.2.linux-amd64.tar.gz
+	2、添加/usr1/tools/go/bin到环境变量/etc/profile
+	export PATH=$PATH:/usr1/tools/go/bin
+	go version查看安装是否成功
+	3、安装git：yum install -y git
+	4、到go的这个src/github.com/CodisLabs/目录git clone https://github.com/CodisLabs/codis.git -b release3.2
+	4、安装：yum install autoconf
+
+ES安装：https://www.elastic.co/downloads/elasticsearch
+	rpm -qpl xxx.rpm查看安装路径
+	can not run elasticsearch as root？
+		因为安全问题elasticsearch 不让用root用户直接运行，所以要创建新用户
+		第一步：liunx创建新用户  adduser XXX    然后给创建的用户加密码 passwd XXX    输入两次密码。
+		第二步：切换刚才创建的用户 su XXX  然后执行elasticsearch  会显示Permission denied 权限不足。
+		第三步：给新建的XXX赋权限，chmod 777 *  这个不行，因为这个用户本身就没有权限，肯定自己不能给自己付权限。所以要用root用户登录付权限。
+		第四步：root给XXX赋权限，chown -R XXX /你的elasticsearch安装目录。
+		然后执行成功。目录包含：/usr/share/elasticsearch、/etc/sysconfig/elasticsearch、/etc/elasticsearch、/var/log/elasticsearch、/var/lib/elasticsearch
+
+KIBANA:关闭防火墙
+	server.host: "0.0.0.0"
+	elasticsearch.url: "http://localhost:9200"
+
+Hadoop安装：http://hadoop.apache.org/docs/current/ || http://hadoop.apache.org/docs/r1.0.4/cn/quickstart.html
+	下载hadoop-3.0.0.tar.gz解压
+	设置JAVA_HOME：vi etc/hadoop/hadoop-env.sh：JAVA_HOME=/usr
+	单机模式，主机名要求localhost
+		$ mkdir input
+		$ cp etc/hadoop/*.xml input
+		$ bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-3.0.0.jar grep input output 'dfs[a-z.]+'
+		$ cat output/*
+	伪分布式，主机名要求localhost
+	修改etc/hadoop/core-site.xml:
+	<configuration>
+		<property>
+			<name>fs.defaultFS</name>
+			<value>hdfs://localhost:9000</value>
+		</property>
+	</configuration>
+	修改etc/hadoop/hdfs-site.xml:
+	<configuration>
+		<property>
+			<name>dfs.replication</name>
+			<value>1</value>
+		</property>
+	</configuration>
+	为了ssh localhost不用密码，修改
+	$ ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+	$ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+	$ chmod 0600 ~/.ssh/authorized_keys
+	YARN方式启动
+	etc/hadoop/mapred-site.xml:
+	<configuration>
+		<property>
+			<name>mapreduce.framework.name</name>
+			<value>yarn</value>
+		</property>
+	</configuration>
+	etc/hadoop/yarn-site.xml:
+	<configuration>
+		<property>
+			<name>yarn.nodemanager.aux-services</name>
+			<value>mapreduce_shuffle</value>
+		</property>
+		<property>
+			<name>yarn.nodemanager.env-whitelist</name> <value>JAVA_HOME,HADOOP_COMMON_HOME,HADOOP_HDFS_HOME,HADOOP_CONF_DIR,CLASSPATH_PREPEND_DISTCACHE,HADOOP_YARN_HOME,HADOOP_MAPRED_HOME</value>
+		</property>
+	</configuration>
+	报错做如下处理ERROR: but there is no YARN_RESOURCEMANAGER_USER defined. Aborting launch.
+		$ vim sbin/start-yarn.sh 
+		$ vim sbin/stop-yarn.sh 
+		在顶部空白处添加内容：
+		YARN_RESOURCEMANAGER_USER=root
+		HADOOP_SECURE_DN_USER=yarn
+		YARN_NODEMANAGER_USER=root
+	sbin/start-yarn.sh启动
+	sbin/stop-yarn.sh停止
+	执行jps命令验证安装
+		
+Hbase安装：https://hbase.apache.org/book.html#quickstart
+	设置环境变量 vi /etc/profile命令修改系统环境变量（JDK1.8）
+	export HBASE_HOME=/usr1/tools/hbase-1.2.6
+	export PATH=$PATH:$HBASE_HOME/bin
+	conf/hbase-env.sh：JAVA_HOME=/usr
+	conf/hbase-site.xml
+	<configuration>
+	  <property>
+		<name>hbase.rootdir</name>
+		<value>file:///home/testuser/hbase</value>
+	  </property>
+	  <property>
+		<name>hbase.zookeeper.property.dataDir</name>
+		<value>/home/testuser/zookeeper</value>
+	  </property>
+	</configuration>
+	启动./start-hbase.sh
+	停止./stop-hbase.sh
+	测试
+	list
+	create 'member', 'm_id', 'address', 'info'
+	describe 'member'
+
+
+

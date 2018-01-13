@@ -1,7 +1,6 @@
 package com.chendehe.common.enums;
 
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
 import java.util.Map;
 
 /**
@@ -18,7 +17,7 @@ public enum GenderEnum {
     this.value = value;
   }
 
-  private static Map<Integer, GenderEnum> map = Maps.newHashMap();
+  private static Map<Integer, GenderEnum> map;
 
   static {
     final ImmutableMap.Builder<Integer, GenderEnum> builder = ImmutableMap.builder();

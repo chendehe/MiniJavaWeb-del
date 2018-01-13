@@ -1,6 +1,7 @@
 package com.chendehe.util;
 
 import java.util.Date;
+import java.util.UUID;
 import org.apache.commons.lang3.RandomUtils;
 
 public final class IdGenerator {
@@ -12,7 +13,7 @@ public final class IdGenerator {
    * @return 时间戳
    */
   public static String get() {
-    return new Date().getTime() + RandomUtils.nextInt(1000, 9999) + "";
+    return UUID.randomUUID().toString();
   }
 
 }
