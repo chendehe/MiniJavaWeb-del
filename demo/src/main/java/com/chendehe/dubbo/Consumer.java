@@ -11,7 +11,7 @@ public class Consumer {
   public static void main(String[] args) {
 
     ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-        new String[]{"consumer.xml"});
+        new String[]{"config/consumer.xml"});
     context.start();
 
     DemoService demoService = (DemoService) context.getBean("demoService"); // 获取远程服务代理

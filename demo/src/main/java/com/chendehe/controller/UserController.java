@@ -7,10 +7,12 @@ import com.chendehe.service.UserService;
 import com.chendehe.vo.Page;
 import com.chendehe.vo.UserVo;
 import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -142,5 +145,13 @@ public class UserController {
     } catch (BaseException e) {
       return ResultUtil.exception(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  /**
+   * 查找详情. 成功返回200.
+   */
+  @GetMapping("/session")
+  Object sessionId(HttpServletRequest request) {
+    return request.getSession().getId();
   }
 }
