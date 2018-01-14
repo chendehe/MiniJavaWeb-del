@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      label: master
+      server:
+        git:
+          uri: https://github.com/chendehe/ConfigurationMgr/
+          search-paths: web/
+          username: chendehe
+          password: aass54204678
+
+server:
+  port: 1050
