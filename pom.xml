@@ -17,6 +17,10 @@
         <module>demo</module>
         <module>eureka-server</module>
         <module>config-server</module>
+		<module>ribbon-server</module>
+		<module>feign-server</module>
+		<module>zuul-server</module>
+		<module>security-server</module>
     </modules>
 
   <properties>
