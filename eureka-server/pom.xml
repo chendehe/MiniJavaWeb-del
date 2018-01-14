@@ -10,6 +10,7 @@
     </parent>
     <groupId>com.chendehe.cloud.eureka</groupId>
     <artifactId>eureka-server</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
 
     <dependencies>
         <!--eureka server -->
