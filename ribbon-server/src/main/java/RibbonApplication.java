@@ -26,7 +26,8 @@ public class RibbonApplication {
   public HttpHeaders getHeaders() {
     HttpHeaders headers = new HttpHeaders();
     String auth = "miniweb:miniweb";
-    headers.set("Authorization", "Basic " + new String(Base64.getEncoder().encode(auth.getBytes(Charset.forName("US-ASCII")))));
+    headers.set("Authorization", "Basic " +
+        new String(Base64.getEncoder().encode(auth.getBytes(Charset.forName("US-ASCII")))));
     return headers;
   }
 
