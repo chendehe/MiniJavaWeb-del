@@ -7,7 +7,7 @@ import org.apache.kafka.common.Cluster;
 import org.apache.kafka.common.PartitionInfo;
 
 /**
- * 可选
+ * 可选.
  */
 public class MyPartitioner implements Partitioner {
 

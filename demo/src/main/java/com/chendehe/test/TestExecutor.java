@@ -11,12 +11,12 @@ public class TestExecutor {
 
   public static void main(String[] args) {
     System.out.println("Start");
-    System.out.println("End1"+Thread.activeCount());
+    System.out.println("End1" + Thread.activeCount());
     CyclicBarrier barrier = new CyclicBarrier(4);
-    System.out.println("End1"+Thread.activeCount());
+    System.out.println("End1" + Thread.activeCount());
 
     ExecutorService exe = Executors.newFixedThreadPool(2);
-    System.out.println("End1"+Thread.activeCount());
+    System.out.println("End1" + Thread.activeCount());
     Future<?> f1 = exe.submit(new Runnable() {
       @Override
       public void run() {
@@ -71,7 +71,7 @@ public class TestExecutor {
     } catch (BrokenBarrierException e) {
       e.printStackTrace();
     }
-    System.out.println("End1"+Thread.activeCount());
+    System.out.println("End1" + Thread.activeCount());
     try {
       f1.get();
       f2.get();
