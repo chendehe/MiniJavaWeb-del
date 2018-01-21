@@ -39,10 +39,7 @@
       <zookeeper.version>3.4.11</zookeeper.version>
       <zkclient.version>0.9</zkclient.version>
       <kafka.version>1.0.0</kafka.version>
-      <dubbo.version>2.5.3</dubbo.version>
       <cloud.version>Camden.SR7</cloud.version>
-
-      <my.dubbo.api.version>1.0.0-SNAPSHOT</my.dubbo.api.version>
   </properties>
 
   <dependencyManagement>
@@ -151,17 +148,6 @@
         <groupId>org.apache.kafka</groupId>
         <artifactId>kafka_2.12</artifactId>
         <version>${kafka.version}</version>
-      </dependency>
-      <!-- dubbo -->
-      <dependency>
-        <groupId>com.alibaba</groupId>
-        <artifactId>dubbo</artifactId>
-        <version>${dubbo.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.chendehe.server</groupId>
-        <artifactId>dubbo-api</artifactId>
-        <version>${my.dubbo.api.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework.cloud</groupId>

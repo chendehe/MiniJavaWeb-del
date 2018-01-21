@@ -135,15 +135,6 @@
       <groupId>org.apache.kafka</groupId>
       <artifactId>kafka_2.12</artifactId>
     </dependency>
-    <!-- dubbo -->
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>dubbo</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.chendehe.server</groupId>
-      <artifactId>dubbo-api</artifactId>
-    </dependency>
 
     <!-- test -->
     <dependency>
