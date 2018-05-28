@@ -11,11 +11,14 @@ import com.coreos.jetcd.options.DeleteOption;
 import com.coreos.jetcd.options.GetOption;
 import com.coreos.jetcd.options.WatchOption;
 import com.coreos.jetcd.watch.WatchEvent;
+import com.coreos.jetcd.watch.WatchEvent.EventType;
 import com.google.common.base.Preconditions;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
@@ -59,7 +62,7 @@ public final class ConfigService {
     return get(key, GetOption.DEFAULT);
   }
 
-  public static Map<String, String> getPrefix(String key) {
+  public static Map<String, String> getConfig(String key) {
     return get(key, GetOption.newBuilder().withPrefix(ByteSequence.fromString(key)).build());
   }
 
@@ -123,35 +126,49 @@ public final class ConfigService {
       return null;
     }
 
-    Map<String, String> map = new HashMap<>(events.size());
+    Map<String, String> mapAdd = new HashMap<>(events.size());
+    Set<String> keyDel = new HashSet<>(events.size());
     for (WatchEvent event : events) {
       String eventKey = event.getKeyValue().getKey().toStringUtf8();
       LOGGER.info("{} key: {}", event.getEventType(), eventKey);
-      map.put(eventKey, event.getKeyValue().getValue().toStringUtf8());
-    }
-    for (Entry<String, ChangeConfigListener> entry : listeners.entrySet()) {
-      if (events.get(0).getKeyValue().getKey().toStringUtf8().startsWith(entry.getKey())) {
-        entry.getValue().receiveConfig(map);
-        return map;
+      if (EventType.PUT == event.getEventType()) {
+        mapAdd.put(eventKey, event.getKeyValue().getValue().toStringUtf8());
+        for (Entry<String, ChangeConfigListener> entry : listeners.entrySet()) {
+          if (event.getKeyValue().getKey().toStringUtf8().startsWith(entry.getKey())) {
+            entry.getValue().addConfig(mapAdd);
+          }
+        }
+      } else if (EventType.DELETE == event.getEventType()) {
+        keyDel.add(eventKey);
+        for (Entry<String, ChangeConfigListener> entry : listeners.entrySet()) {
+          if (event.getKeyValue().getKey().toStringUtf8().startsWith(entry.getKey())) {
+            entry.getValue().delConfig(keyDel);
+          }
+        }
+      } else {
+        LOGGER.warn("UNRECOGNIZED");
       }
+
+
     }
-    return map;
+    return mapAdd;
   }
 
   private static final ConcurrentHashMap<String, ChangeConfigListener> listeners = new ConcurrentHashMap<>();
 
   /**
    * 添加事件监听
-   * @param preKey 不能互为前缀
+   *
+   * @param group 不能互为前缀
    * @param listener 监听
    */
-  public static void addListener(final String preKey, ChangeConfigListener listener) {
-    LOGGER.info("listen...{}", preKey);
-    Preconditions.checkNotNull(preKey, "preKey can't be null");
+  public static void addListener(final String group, ChangeConfigListener listener) {
+    LOGGER.info("listen...{}", group);
+    Preconditions.checkNotNull(group, "group can't be null");
     new Thread(() -> {
-      listeners.put(preKey, listener);
+      listeners.put(group, listener);
       for (; ; ) {
-        watchPrefix(preKey);
+        watchPrefix(group);
       }
     }).start();
   }
