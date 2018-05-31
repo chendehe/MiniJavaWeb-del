@@ -1,16 +1,48 @@
-eureka:
-  instance:
-    hostname: localhost
-  client:
-    registerWithEureka: false
-    fetchRegistry: false
-    serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
-
-server:
-  port: 1000
 logging:
   level: info
+spring:
+  application:
+    # 注册到Eureka Server的应用名称
+    name: Eureka Server HA
+---
+spring:
+  profiles: peer1
+eureka:
+  instance:
+    # 配置127.0.0.1到peer的映射
+    hostname: peer1
+    # true表示将ip注册到Eureka Server，否则注册操作系统的hostname，默认false
+    # ip相同，为true是不可用：unavailable-replicas，故设为false
+    prefer-ip-address: false
+    metadata-map:
+      my-meta: 自定义元数据
+  server:
+    # 自我保护模式，默认true开启
+    enable-self-preservation: true
+  client:
+    # 是否将自己注册到Eureka Server，默认true
+    registerWithEureka: true
+    # 是否从Eureka Server获取信息，默认true
+    fetchRegistry: true
+    serviceUrl:
+      # 交互地址，集群地址','分隔
+      defaultZone: http://peer2:1001/eureka/
+server:
+  port: 1000
+
+---
+spring:
+  profiles: peer2
+eureka:
+  instance:
+    hostname: peer2
+  server:
+    enable-self-preservation: true
+  client:
+    serviceUrl:
+      defaultZone: http://peer1:1000/eureka/
+server:
+  port: 1001
 
 
 
