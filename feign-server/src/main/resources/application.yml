@@ -5,15 +5,16 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://peer1:1000/eureka/
-feign:
-  compression:
-    request:
-      # 压缩
-      mime-types: text/html,application/xml,application/json
-      min-request-size: 2048
+#feign:
+#  compression:
+#    request:
+#      # 压缩
+#      mime-types: text/html,application/xml,application/json
+#      min-request-size: 2048
 #hystrix.enabled=true
 server:
   port: 1020
 logging:
   level:
-    com.chendehe.cloud.feign.service.FeignLogConfig: DEBUG
+    # 将Feign接口日志级别设成DBUG，因为Feign的Level只对DEBUG作出响应
+    com.chendehe.cloud.feign.service.UserServiceImpl: DEBUG
