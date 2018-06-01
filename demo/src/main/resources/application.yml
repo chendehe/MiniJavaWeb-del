@@ -23,14 +23,14 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:1000/eureka/
 # 访问方式 http://miniweb:miniweb@localhost:1112
-security:
-  basic:
-    enabled: true
-  user:
-    name: miniweb
-    password: miniweb
-    role:
-    - USER
-  sessions: STATELESS
+#security:
+#  basic:
+#    enabled: true
+#  user:
+#    name: miniweb
+#    password: miniweb
+#    role:
+#    - USER
+#  sessions: STATELESS
 
 
