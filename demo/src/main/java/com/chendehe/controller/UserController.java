@@ -5,8 +5,11 @@ import com.chendehe.exception.BaseException;
 import com.chendehe.exception.ResultUtil;
 import com.chendehe.service.UserService;
 import com.chendehe.vo.Page;
+import com.chendehe.vo.PageResult;
 import com.chendehe.vo.UserVo;
+import com.google.common.collect.Lists;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.slf4j.Logger;
@@ -45,7 +48,17 @@ public class UserController {
   ResponseEntity findAll(Page page) {
     LOGGER.info("[UserController] id is:{}", page);
     try {
-      return ResultUtil.success(service.findAll(page), HttpStatus.OK);
+      PageResult<UserVo> result = new PageResult<>();
+      List<UserVo> userVoList = Lists.newArrayList();
+      UserVo user = new UserVo();
+      user.setId("11111");
+      user.setName("test");
+      userVoList.add(user);
+      result.setList(userVoList);
+      result.setCurrentPage(1);
+      result.setPageSize(10);
+      result.setTotalNum(10);
+      return ResultUtil.success(result, HttpStatus.OK);
     } catch (BaseException e) {
       return ResultUtil.exception(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -72,7 +85,7 @@ public class UserController {
   ResponseEntity save(@RequestBody UserVo userVo) {
     LOGGER.info("[UserController] user is:{}", JSONObject.toJSON(userVo));
     try {
-      return ResultUtil.success(service.save(userVo), HttpStatus.CREATED);
+      return ResultUtil.success(userVo, HttpStatus.CREATED);
     } catch (Exception e) {
       return ResultUtil.exception(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
