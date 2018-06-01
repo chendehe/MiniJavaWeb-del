@@ -55,13 +55,14 @@ public class UserController {
    * 查找详情. 成功返回200.
    */
   @GetMapping("/{id}")
-  ResponseEntity findOne(@PathVariable String id) {
+  String findOne(@PathVariable String id) {
     LOGGER.info("[UserController] id is:{}", id);
-    try {
-      return ResultUtil.success(service.findOne(id), HttpStatus.OK);
-    } catch (BaseException e) {
-      return ResultUtil.exception(e, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    return "Successful";
+//    try {
+//      return ResultUtil.success(service.findOne(id), HttpStatus.OK);
+//    } catch (BaseException e) {
+//      return ResultUtil.exception(e, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
   }
 
   /**
