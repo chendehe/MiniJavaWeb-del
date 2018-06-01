@@ -4,8 +4,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserServiceHystric implements UserServiceImpl {
+
   @Override
-  public void delete(String id) {
-    System.out.println("delete " + id + " error!");
+  public String get(String id) {
+    System.out.println("get " + id + " error!");
+    return "Error";
   }
 }

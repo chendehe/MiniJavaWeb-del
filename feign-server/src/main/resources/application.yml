@@ -4,7 +4,7 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:1000/eureka/
+      defaultZone: http://peer1:1000/eureka/,http://peer2:1001/
 feign: hystrix.enabled=true
 server:
   port: 1020
