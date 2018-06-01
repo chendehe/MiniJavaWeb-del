@@ -5,6 +5,15 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://peer1:1000/eureka/
-feign: hystrix.enabled=true
+feign:
+  compression:
+    request:
+      # 压缩
+      mime-types: text/html,application/xml,application/json
+      min-request-size: 2048
+#hystrix.enabled=true
 server:
   port: 1020
+logging:
+  level:
+    com.chendehe.cloud.feign.service.FeignLogConfig: DEBUG

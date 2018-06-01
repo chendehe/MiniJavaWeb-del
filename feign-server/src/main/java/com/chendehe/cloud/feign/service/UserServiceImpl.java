@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * MINI-WEB 是任意的客户端名称，用于创建 Ribbon 负载均衡
  */
-@FeignClient(name = "MINI-WEB", fallback = UserServiceHystric.class)
+@FeignClient(name = "MINI-WEB", configuration = FeignLogConfig.class,
+    fallback = UserServiceHystric.class)
 public interface UserServiceImpl {
 
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
