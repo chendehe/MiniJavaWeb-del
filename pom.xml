@@ -39,7 +39,7 @@
       <zookeeper.version>3.4.11</zookeeper.version>
       <zkclient.version>0.9</zkclient.version>
       <kafka.version>1.0.0</kafka.version>
-      <cloud.version>Camden.SR7</cloud.version>
+      <cloud.version>Edgware.SR3</cloud.version>
   </properties>
 
   <dependencyManagement>
