@@ -18,15 +18,15 @@ public class UserServiceImpl {
   private HttpHeaders headers;
 
   // 该注解对该方法创建了熔断器的功能，并指定了fallbackMethod熔断方法，熔断方法直接返回了一个字符串
-  @HystrixCommand(fallbackMethod = "deleteError")
-  public void delete(String id) {
+  @HystrixCommand(fallbackMethod = "getError")
+  public void get(String id) {
     System.out.println("===:" + id);
 
-    restTemplate.exchange("http://MINI-WEB/" + id, HttpMethod.DELETE, new HttpEntity<>(headers), String.class).getBody();
+    restTemplate.exchange("http://MINI-WEB/" + id, HttpMethod.GET, new HttpEntity<>(headers), String.class).getBody();
     //restTemplate.delete("http://MINI-WEB/" + id, String.class);
   }
 
-  public void deleteError(String id) {
+  public void getError(String id) {
     System.out.println("delete " + id + " error!");
   }
 
