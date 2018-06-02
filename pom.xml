@@ -22,6 +22,7 @@
         <module>zuul-server</module>
         <module>security-server</module>
         <module>hystrix-dashboard</module>
+        <module>hystrix-turbine</module>
     </modules>
 
   <properties>
