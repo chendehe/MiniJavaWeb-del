@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 //可以用 hystrix-dashboard 可视化监控
 @EnableCircuitBreaker
 //Edgware可忽略配置@EnableDiscoveryClient，引入包即可
-@EnableFeignClients
+@EnableFeignClients/*(defaultConfiguration = FeignConfig.class)*/
 @SpringBootApplication
 @ComponentScan("com.chendehe.cloud.feign")
 public class FeignApplication {
