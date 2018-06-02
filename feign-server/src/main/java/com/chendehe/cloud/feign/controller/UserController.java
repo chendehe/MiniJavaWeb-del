@@ -1,9 +1,8 @@
 package com.chendehe.cloud.feign.controller;
 
-import com.chendehe.cloud.feign.service.Page;
-import com.chendehe.cloud.feign.service.PageResult;
+import com.chendehe.cloud.feign.vo.Page;
 import com.chendehe.cloud.feign.service.UserServiceImpl;
-import com.chendehe.cloud.feign.service.UserVo;
+import com.chendehe.cloud.feign.vo.UserVo;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;

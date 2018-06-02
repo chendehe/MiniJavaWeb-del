@@ -1,5 +1,8 @@
 package com.chendehe.cloud.feign.service;
 
+import com.chendehe.cloud.feign.config.FeignLogConfig;
+import com.chendehe.cloud.feign.vo.PageResult;
+import com.chendehe.cloud.feign.vo.UserVo;
 import java.util.Map;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;

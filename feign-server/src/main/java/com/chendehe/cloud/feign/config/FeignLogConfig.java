@@ -1,4 +1,4 @@
-package com.chendehe.cloud.feign.service;
+package com.chendehe.cloud.feign.config;
 
 import feign.Logger.Level;
 import org.springframework.context.annotation.Bean;

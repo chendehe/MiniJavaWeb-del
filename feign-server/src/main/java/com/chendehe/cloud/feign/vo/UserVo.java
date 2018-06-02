@@ -1,4 +1,4 @@
-package com.chendehe.cloud.feign.service;
+package com.chendehe.cloud.feign.vo;
 
 import java.util.Date;
 import org.apache.commons.lang.builder.ToStringBuilder;

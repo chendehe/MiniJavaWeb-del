@@ -1,4 +1,4 @@
-package com.chendehe.cloud.feign.service;
+package com.chendehe.cloud.feign.vo;
 
 public class Page {
 

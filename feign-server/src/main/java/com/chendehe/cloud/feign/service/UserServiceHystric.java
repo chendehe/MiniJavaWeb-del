@@ -1,5 +1,7 @@
 package com.chendehe.cloud.feign.service;
 
+import com.chendehe.cloud.feign.vo.PageResult;
+import com.chendehe.cloud.feign.vo.UserVo;
 import java.util.Map;
 import org.springframework.stereotype.Component;
 
