@@ -21,6 +21,7 @@
         <module>feign-server</module>
         <module>zuul-server</module>
         <module>security-server</module>
+        <module>hystrix-dashboard</module>
     </modules>
 
   <properties>
