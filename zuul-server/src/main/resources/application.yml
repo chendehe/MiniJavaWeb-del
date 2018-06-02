@@ -7,6 +7,7 @@ eureka:
       defaultZone: http://localhost:1000/eureka/
 server:
   port: 1030
+
 zuul:
   routes:
     api-a:
@@ -15,3 +16,8 @@ zuul:
     api-b:
       path: /api-b/**
       serviceId: service-feign
+      
+management:
+  security:
+    # 禁用actuator鉴权
+    enabled: false
