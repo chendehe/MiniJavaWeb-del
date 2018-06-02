@@ -1,6 +1,6 @@
 package com.chendehe.cloud.feign.service;
 
-import com.chendehe.cloud.feign.config.FeignLogConfig;
+import com.chendehe.cloud.feign.config.FeignConfig;
 import com.chendehe.cloud.feign.vo.PageResult;
 import com.chendehe.cloud.feign.vo.UserVo;
 import java.util.Map;
@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * MINI-WEB 是任意的客户端名称，用于创建 Ribbon 负载均衡
+ * 普通回滚 fallback = UserServiceFallback.class
+ * 带原因的回滚，更加灵活，可根据异常类型区别处理 fallbackFactory = UserServiceFallbackFactory.class
  */
-@FeignClient(name = "MINI-WEB", configuration = FeignLogConfig.class,
-    fallback = UserServiceHystric.class)
+@FeignClient(name = "MINI-WEB", configuration = FeignConfig.class,
+    fallbackFactory = UserServiceFallbackFactory.class)
 public interface UserServiceImpl {
 
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)

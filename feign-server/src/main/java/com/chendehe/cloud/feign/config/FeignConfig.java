@@ -5,13 +5,24 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Feign 配置类，配置日志级别为FULL
+ * Feign 配置类
  */
 @Configuration
-public class FeignLogConfig {
+public class FeignConfig {
 
+  /**
+   * 配置日志级别为FULL
+   */
   @Bean
   Level feignLoggerLevel() {
     return Level.FULL;
   }
+
+//  /**
+//   * Java配置方式自定义负载均衡算法，或使用配置文件配置
+//   */
+//  @Bean
+//  public IRule ribbonRule() {
+//    return new RandomRule();
+//  }
 }

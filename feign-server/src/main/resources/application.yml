@@ -5,16 +5,32 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://peer1:1000/eureka/
-#feign:
+feign:
 #  compression:
 #    request:
 #      # 压缩
+#      enabled: true
 #      mime-types: text/html,application/xml,application/json
 #      min-request-size: 2048
-#hystrix.enabled=true
+#    response:
+#      # 压缩
+#      enabled: true
+  # 启动熔断器，UI地址http://localhost:1020/hystrix.stream
+  hystrix:
+    enabled: true
 server:
   port: 1020
 logging:
   level:
     # 将Feign接口日志级别设成DBUG，因为Feign的Level只对DEBUG作出响应
     com.chendehe.cloud.feign.service.UserServiceImpl: DEBUG
+#MINI-WEB:
+#  ribbon:
+#    # 指定负载均衡算法
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+#    # 指定超时和重试机制
+#    ReadTimeout: 100
+#    ConnectTimeout: 500
+#    OkToRetryOnAllOperations: true
+#    MaxAutoRetries: 1
+#    MaxAutoRetriesNextServer: 2

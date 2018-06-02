@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserServiceHystric implements UserServiceImpl {
+public class UserServiceFallback implements UserServiceImpl {
 
   @Override
   public String findOne(String id) {
