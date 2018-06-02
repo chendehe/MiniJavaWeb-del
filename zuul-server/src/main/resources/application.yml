@@ -7,16 +7,37 @@ eureka:
       defaultZone: http://localhost:1000/eureka/
 server:
   port: 1030
+# 打印转发细节
+logging:
+  level:
+    com.netflix: DEBUG
 
 zuul:
+  prefix: /api
+  # 为 true 时，转发忽略前缀
+  strip-prefix: true
   routes:
-    api-a:
-      path: /api-a/**
-      serviceId: service-ribbon
-    api-b:
-      path: /api-b/**
-      serviceId: service-feign
-      
+    # 指定微服务的访问路径 1，即可用api-a替代service-feign访问
+#    api-a: # 路由的名称，任意取名
+#      serviceId: service-feign
+#      path: /api-a/**
+    # 指定微服务的访问路径 2，即可用service替代service-feign访问
+    # 如何指定URL，参考资料
+    service-feign: /service/**
+  # 忽略指定微服务
+#  ignored-services: service-feign, mini-web
+  # 可以使用 ‘*’ 忽略所有微服务，只路由上述指定的微服务
+  ignored-services: '*'
+  # 忽略包含aaa的url，包含明敏感路径
+  ignored-patterns: /**/aaa/**
+  # 指定全局敏感header,默认Cookie,Set-Cookie
+  sensitive-headers: Cookie,Set-Cookie,Authorization
+  # aaa,bbb不会被传播到其他微服务
+#  ignored-headers: aaa,bbb
+  # 需要使用下游的Spring Security的Header是，设置为false
+#  ignore-security-headers: false
+  # true禁用过滤器：PreRequestLogFilter
+#  PreRequestLogFilter.pre.disable: true
 management:
   security:
     # 禁用actuator鉴权

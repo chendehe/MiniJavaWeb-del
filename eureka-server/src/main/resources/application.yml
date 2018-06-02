@@ -18,7 +18,7 @@ eureka:
       my-meta: 自定义元数据
   server:
     # 自我保护模式，默认true开启
-    enable-self-preservation: true
+    enable-self-preservation: false
   client:
     # 是否将自己注册到Eureka Server，默认true
     registerWithEureka: false
