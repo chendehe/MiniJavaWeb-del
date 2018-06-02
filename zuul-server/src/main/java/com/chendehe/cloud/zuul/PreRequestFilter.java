@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
  * 自定义filter
  */
 @Component
-public class PreRequestLogFilter extends ZuulFilter {
+public class PreRequestFilter extends ZuulFilter {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(PreRequestLogFilter.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(PreRequestFilter.class);
 
   /**
    * pre、route、post、error等

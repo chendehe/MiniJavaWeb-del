@@ -37,7 +37,7 @@ zuul:
   # 需要使用下游的Spring Security的Header是，设置为false
 #  ignore-security-headers: false
   # true禁用过滤器：PreRequestLogFilter
-#  PreRequestLogFilter.pre.disable: true
+#  PreRequestFilter.pre.disable: true
 management:
   security:
     # 禁用actuator鉴权
