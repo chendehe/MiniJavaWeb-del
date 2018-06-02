@@ -21,12 +21,12 @@ eureka:
     enable-self-preservation: true
   client:
     # 是否将自己注册到Eureka Server，默认true
-    registerWithEureka: true
+    registerWithEureka: false
     # 是否从Eureka Server获取信息，默认true
-    fetchRegistry: true
+    fetchRegistry: false
     serviceUrl:
       # 交互地址，集群地址','分隔
-      defaultZone: http://peer2:1001/eureka/
+      defaultZone: http://peer1:1001/eureka/
 server:
   port: 1000
 
