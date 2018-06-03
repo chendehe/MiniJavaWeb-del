@@ -9,7 +9,7 @@ spring:
           uri: https://github.com/chendehe/ConfigurationMgr/
           search-paths: web/
           username: chendehe
-          password: aass54204678
+          password: *********
   rabbitmq:
     host: localhost
     port: 5672
