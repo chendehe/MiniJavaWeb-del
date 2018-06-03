@@ -10,6 +10,16 @@ spring:
           search-paths: web/
           username: chendehe
           password: aass54204678
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 
 server:
   port: 1050
+
+management:
+  security:
+    # 禁用actuator鉴权
+    enabled: false

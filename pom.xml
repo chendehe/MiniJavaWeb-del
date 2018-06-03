@@ -23,7 +23,6 @@
         <module>security-server</module>
         <module>hystrix-dashboard</module>
         <module>hystrix-turbine</module>
-        <module>cloud-bus</module>
     </modules>
 
   <properties>
