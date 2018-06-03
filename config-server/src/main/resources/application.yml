@@ -9,17 +9,29 @@ spring:
           uri: https://github.com/chendehe/ConfigurationMgr/
           search-paths: web/
           username: chendehe
-          password: *********
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-
-server:
-  port: 1050
+          password: aass54204678
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: guest
+#    password: guest
 
 management:
   security:
     # 禁用actuator鉴权
     enabled: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1000/eureka/
+---
+spring:
+  profiles: peer1
+server:
+  port: 1050
+---
+spring:
+  profiles: peer2
+server:
+  port: 1051

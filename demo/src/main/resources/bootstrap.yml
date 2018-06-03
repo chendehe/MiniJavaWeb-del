@@ -3,4 +3,15 @@ spring:
     config:
       label: master
       profile: dev
-      uri: http://localhost:1050/
+      # 高可用时注释
+#      uri: http://localhost:1050/
+      # 高可用配置
+      discovery:
+        enabled: true
+        service-id: config-server
+
+# 必须写在这里，否则找不到service-id: config-server
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1000/eureka/

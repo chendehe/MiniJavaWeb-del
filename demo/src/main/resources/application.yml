@@ -13,11 +13,11 @@ jedis:
   host: 192.168.111.128
   port: 6379
 
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    username: guest
+#    password: guest
 
 logging:
   level: info
@@ -30,10 +30,6 @@ management:
 test:
   config: aaa
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:1000/eureka/
 ---
 spring:
   profiles: peer1
