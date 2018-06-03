@@ -8,7 +8,7 @@
         <artifactId>boot-parent</artifactId>
         <version>1.0.0</version>
     </parent>
-    <groupId>com.chendehe.cloud.feign</groupId>
+    <groupId>com.chendehe.cloud.hystrix</groupId>
     <artifactId>hystrix-dashboard</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 

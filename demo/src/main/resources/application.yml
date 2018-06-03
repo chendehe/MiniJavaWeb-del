@@ -16,6 +16,14 @@ jedis:
 logging:
   level: info
 
+management:
+  security:
+    # 禁用actuator鉴权
+    enabled: false
+
+test:
+  config: aaa
+
 eureka:
   client:
     serviceUrl:
