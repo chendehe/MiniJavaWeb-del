@@ -68,3 +68,8 @@ spring:
   profiles: peer2
 server:
   port: 1021
+
+management:
+  security:
+    # 禁用actuator鉴权
+    enabled: false

@@ -23,6 +23,7 @@
         <module>security-server</module>
         <module>hystrix-dashboard</module>
         <module>hystrix-turbine</module>
+        <module>admin-server</module>
     </modules>
 
   <properties>
@@ -42,6 +43,7 @@
       <zkclient.version>0.9</zkclient.version>
       <kafka.version>1.0.0</kafka.version>
       <cloud.version>Edgware.SR3</cloud.version>
+      <spring-boot-admin.version>1.5.7</spring-boot-admin.version>
   </properties>
 
   <dependencyManagement>
@@ -158,6 +160,26 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-server</artifactId>
+            <version>${spring-boot-admin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-server-ui</artifactId>
+            <version>${spring-boot-admin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-server-ui-hystrix</artifactId>
+            <version>${spring-boot-admin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-server-ui-turbine</artifactId>
+            <version>${spring-boot-admin.version}</version>
+        </dependency>
     </dependencies>
   </dependencyManagement>
 

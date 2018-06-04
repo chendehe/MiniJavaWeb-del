@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: admin-server
+  boot:
+    admin:
+      routes:
+        endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
+      turbine:
+         clusters: default
+         location: turbine
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://peer1:1000/eureka/
+server:
+  port: 1070
+
+turbine:
+  app-config: order-service,user-service
+  cluster-name-expression: "'default'"
