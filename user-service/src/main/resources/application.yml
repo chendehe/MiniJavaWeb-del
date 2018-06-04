@@ -1,0 +1,70 @@
+spring:
+  application:
+    name: user-service
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://peer1:1000/eureka/
+
+test:
+  config: A
+
+feign:
+  client:
+    config:
+      order-service:
+        connectTimeout: 5000  # 相当于Request.Options
+        readTimeout: 5000     # 相当于Request.Options
+        # 配置Feign的日志级别，相当于代码配置方式中的Logger
+        loggerLevel: full
+        # Feign的错误解码器，相当于代码配置方式中的ErrorDecoder
+#        errorDecoder: com.example.SimpleErrorDecoder
+        # 配置重试，相当于代码配置方式中的Retryer
+#        retryer: com.example.SimpleRetryer
+        # 配置拦截器，相当于代码配置方式中的RequestInterceptor
+#        requestInterceptors:
+#          - com.example.FooRequestInterceptor
+#          - com.example.BarRequestInterceptor
+        decode404: false
+      # 默认配置，会被上面覆盖
+      # 也可使用Java配置的方式，只要加上@EnableFeignClients(defaultConfiguration = DefaultRibbonConfig.class)
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: basic
+#  compression:
+#    request:
+#      # 压缩
+#      enabled: true
+#      mime-types: text/html,application/xml,application/json
+#      min-request-size: 2048
+#    response:
+#      # 压缩
+#      enabled: true
+  # 启动熔断器，UI地址http://localhost:1020/hystrix.stream
+  hystrix:
+    enabled: true
+#logging:
+#  level:
+#    # 将Feign接口日志级别设成DBUG，因为Feign的Level只对DEBUG作出响应
+#    com.chendehe.cloud.feign.service.UserServiceImpl: DEBUG
+#order-service:
+#  ribbon:
+#    # 指定负载均衡算法
+#    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+#    # 指定超时和重试机制
+#    ReadTimeout: 100
+#    ConnectTimeout: 500
+#    OkToRetryOnAllOperations: true
+#    MaxAutoRetries: 1
+#    MaxAutoRetriesNextServer: 2
+---
+spring:
+  profiles: peer1
+server:
+  port: 1020
+---
+spring:
+  profiles: peer2
+server:
+  port: 1021

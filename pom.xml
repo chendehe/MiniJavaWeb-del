@@ -14,8 +14,8 @@
   <packaging>pom</packaging>
 
     <modules>
-        <module>demo</module>
-        <module>demo-feign</module>
+        <module>order-service</module>
+        <module>user-service</module>
         <module>eureka-server</module>
         <module>config-server</module>
         <module>ribbon-server</module>
