@@ -5,8 +5,6 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:1000/eureka/
-server:
-  port: 1030
 # 打印转发细节
 logging:
   level:
@@ -42,3 +40,15 @@ management:
   security:
     # 禁用actuator鉴权
     enabled: false
+
+---
+spring:
+  profiles: peer1
+server:
+  port: 1030
+
+---
+spring:
+  profiles: peer2
+server:
+  port: 1031
