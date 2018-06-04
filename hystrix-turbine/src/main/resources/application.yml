@@ -8,5 +8,5 @@ eureka:
 server:
   port: 1060
 turbine:
-  app-config: service-feign
+  app-config: demo-feign,demo
   cluster-name-expression: "'default'"

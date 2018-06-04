@@ -15,15 +15,15 @@ zuul:
   # 为 true 时，转发忽略前缀
   strip-prefix: true
   routes:
-    # 指定微服务的访问路径 1，即可用api-a替代service-feign访问
+    # 指定微服务的访问路径 1，即可用api-a替代demo-feign访问
 #    api-a: # 路由的名称，任意取名
-#      serviceId: service-feign
+#      serviceId: demo-feign
 #      path: /api-a/**
-    # 指定微服务的访问路径 2，即可用service替代service-feign访问
+    # 指定微服务的访问路径 2，即可用service替代demo-feign访问
     # 如何指定URL，参考资料
-    service-feign: /service/**
+    demo-feign: /service/**
   # 忽略指定微服务
-#  ignored-services: service-feign, mini-web
+#  ignored-services: demo-feign, mini-web
   # 可以使用 ‘*’ 忽略所有微服务，只路由上述指定的微服务
   ignored-services: '*'
   # 忽略包含aaa的url，包含明敏感路径

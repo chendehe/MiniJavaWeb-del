@@ -9,7 +9,7 @@
         <version>1.0.0</version>
     </parent>
     <groupId>com.chendehe.cloud.feign</groupId>
-    <artifactId>feign-server</artifactId>
+    <artifactId>demo-feign</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <dependencies>

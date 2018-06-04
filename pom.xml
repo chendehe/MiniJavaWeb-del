@@ -15,10 +15,10 @@
 
     <modules>
         <module>demo</module>
+        <module>demo-feign</module>
         <module>eureka-server</module>
         <module>config-server</module>
         <module>ribbon-server</module>
-        <module>feign-server</module>
         <module>zuul-server</module>
         <module>security-server</module>
         <module>hystrix-dashboard</module>

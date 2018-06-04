@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * MINI-WEB 是任意的客户端名称，用于创建 Ribbon 负载均衡
+ * demo 是任意的客户端名称，用于创建 Ribbon 负载均衡
  * 普通回滚 fallback = UserServiceFallback.class
  * 带原因的回滚，更加灵活，可根据异常类型区别处理 fallbackFactory = UserServiceFallbackFactory.class
  */
-@FeignClient(name = "MINI-WEB", fallbackFactory = UserServiceFallbackFactory.class)
+@FeignClient(name = "demo", fallbackFactory = UserServiceFallbackFactory.class)
 public interface UserServiceImpl {
 
   @RequestMapping(value = "/{id}", method = RequestMethod.GET)
