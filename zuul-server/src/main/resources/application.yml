@@ -6,9 +6,9 @@ eureka:
     serviceUrl:
       defaultZone: http://localhost:1000/eureka/
 # 打印转发细节
-logging:
-  level:
-    com.netflix: DEBUG
+#logging:
+#  level:
+#    com.netflix: DEBUG
 
 zuul:
   prefix: /api

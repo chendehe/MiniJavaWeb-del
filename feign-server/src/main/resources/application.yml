@@ -40,12 +40,10 @@ feign:
   # 启动熔断器，UI地址http://localhost:1020/hystrix.stream
   hystrix:
     enabled: true
-server:
-  port: 1020
-logging:
-  level:
-    # 将Feign接口日志级别设成DBUG，因为Feign的Level只对DEBUG作出响应
-    com.chendehe.cloud.feign.service.UserServiceImpl: DEBUG
+#logging:
+#  level:
+#    # 将Feign接口日志级别设成DBUG，因为Feign的Level只对DEBUG作出响应
+#    com.chendehe.cloud.feign.service.UserServiceImpl: DEBUG
 #MINI-WEB:
 #  ribbon:
 #    # 指定负载均衡算法
@@ -56,3 +54,13 @@ logging:
 #    OkToRetryOnAllOperations: true
 #    MaxAutoRetries: 1
 #    MaxAutoRetriesNextServer: 2
+---
+spring:
+  profiles: peer1
+server:
+  port: 1020
+---
+spring:
+  profiles: peer2
+server:
+  port: 1021
