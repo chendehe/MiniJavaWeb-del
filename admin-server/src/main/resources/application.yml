@@ -8,6 +8,8 @@ spring:
       turbine:
         clusters: default
         location: admin-server
+        # MQ的配置
+#        location: http://localhost:${turbine.stream.port}/
 eureka:
   instance:
     prefer-ip-address: true
@@ -20,6 +22,14 @@ server:
 turbine:
   app-config: user-service
   cluster-name-expression: "'default'"
+  # MQ的配置
+#  stream:
+#    port: 8088
+
+management:
+  security:
+    # 禁用actuator鉴权
+    enabled: false
 
 security:
   user:

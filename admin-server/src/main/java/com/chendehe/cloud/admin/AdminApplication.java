@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @SpringBootApplication
 @EnableAdminServer
 @EnableTurbine
+//RabbitMQ 监控
+//@EnableTurbineStream
 @ComponentScan("com.chendehe.cloud.admin")
 public class AdminApplication {
 
@@ -21,7 +23,6 @@ public class AdminApplication {
 
   @Configuration
   public static class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
       // Page with login form is served as /login.html and does a POST on /login
