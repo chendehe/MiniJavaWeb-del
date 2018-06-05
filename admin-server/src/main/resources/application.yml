@@ -20,3 +20,8 @@ server:
 turbine:
   app-config: user-service
   cluster-name-expression: "'default'"
+
+security:
+  user:
+    name: admin
+    password: ${MONITOR_SERVER_PASSWORD:admin}
