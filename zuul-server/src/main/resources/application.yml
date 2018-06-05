@@ -1,6 +1,19 @@
 spring:
   application:
     name: service-zuul
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  sleuth:
+    sampler:
+      percentage: 1.0
+  zipkin:
+    rabbitmq:
+      queue: zipkin
+#    base-url: http://localhost:1080
+
 eureka:
   client:
     serviceUrl:
