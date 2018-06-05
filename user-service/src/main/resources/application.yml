@@ -6,6 +6,11 @@ eureka:
     serviceUrl:
       defaultZone: http://peer1:1000/eureka/
 
+management:
+  security:
+    # 禁用actuator鉴权
+    enabled: false
+
 test:
   config: A
 
@@ -68,8 +73,3 @@ spring:
   profiles: peer2
 server:
   port: 1021
-
-management:
-  security:
-    # 禁用actuator鉴权
-    enabled: false
