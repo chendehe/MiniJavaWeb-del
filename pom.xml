@@ -25,6 +25,7 @@
         <module>hystrix-turbine</module>
         <module>admin-server</module>
         <module>zipkin-server</module>
+        <module>auth-service</module>
     </modules>
 
   <properties>

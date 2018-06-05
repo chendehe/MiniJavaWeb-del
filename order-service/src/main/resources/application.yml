@@ -34,6 +34,7 @@ spring:
   profiles: peer2
 server:
   port: 1112
+
 # 访问方式 http://miniweb:miniweb@localhost:1112
 #security:
 #  basic:
@@ -44,5 +45,3 @@ server:
 #    role:
 #    - USER
 #  sessions: STATELESS
-
-

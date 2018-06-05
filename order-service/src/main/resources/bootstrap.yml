@@ -10,6 +10,10 @@
 #        enabled: true
 #        service-id: config-server
 
+security:
+  oauth2:
+    client:
+      grant-type: client_credentials
 # 必须写在这里，否则找不到service-id: config-server
 eureka:
   client:

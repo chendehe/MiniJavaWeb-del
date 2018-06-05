@@ -1,15 +1,15 @@
-package com.chendehe;
+package com.chendehe.cloud.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan("com.chendehe")
-public class Application {
+@ComponentScan("com.chendehe.cloud.auth")
+public class AuthApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(Application.class, args);
+    SpringApplication.run(AuthApplication.class, args);
   }
 
 }
