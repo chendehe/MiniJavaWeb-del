@@ -7,9 +7,9 @@ spring:
         endpoints: env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
       turbine:
         clusters: default
-        location: admin-server
+#        location: admin-server
         # MQ的配置
-#        location: http://localhost:${turbine.stream.port}/
+        location: http://localhost:${turbine.stream.port}/
 eureka:
   instance:
     prefer-ip-address: true
@@ -20,11 +20,11 @@ server:
   port: 1070
 
 turbine:
-  app-config: user-service
-  cluster-name-expression: "'default'"
+#  app-config: user-service
+#  cluster-name-expression: "'default'"
   # MQ的配置
-#  stream:
-#    port: 8088
+  stream:
+    port: 8088
 
 management:
   security:

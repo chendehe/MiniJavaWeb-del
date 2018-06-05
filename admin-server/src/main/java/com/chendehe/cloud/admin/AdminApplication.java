@@ -3,7 +3,7 @@ package com.chendehe.cloud.admin;
 import de.codecentric.boot.admin.config.EnableAdminServer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.netflix.turbine.EnableTurbine;
+import org.springframework.cloud.netflix.turbine.stream.EnableTurbineStream;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,9 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @SpringBootApplication
 @EnableAdminServer
-@EnableTurbine
+//@EnableTurbine
 //RabbitMQ 监控
-//@EnableTurbineStream
+@EnableTurbineStream
 @ComponentScan("com.chendehe.cloud.admin")
 public class AdminApplication {
 
