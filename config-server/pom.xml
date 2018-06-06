@@ -18,10 +18,10 @@
             <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
         <!--基于RabbitMQ-->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-starter-bus-amqp</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+        </dependency>
         <!--基于Kafka，application.yml可直接使用默认配置-->
         <!--<dependency>-->
             <!--<groupId>org.springframework.cloud</groupId>-->
