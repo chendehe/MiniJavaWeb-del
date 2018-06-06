@@ -34,7 +34,9 @@ zuul:
 #      path: /api-a/**
     # 指定微服务的访问路径 2，即可用service替代user-service访问
     # 如何指定URL，参考资料
-    user-service: /service/**
+    user-service: /user/**
+    auth-service: /auth/**
+    order-service: /order/**
   # 忽略指定微服务
 #  ignored-services: user-service, order-service
   # 可以使用 ‘*’ 忽略所有微服务，只路由上述指定的微服务
