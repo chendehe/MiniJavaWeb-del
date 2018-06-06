@@ -22,5 +22,5 @@
             <artifactId>spring-cloud-starter-netflix-turbine</artifactId>
         </dependency>
     </dependencies>
-	
+
 </project>

@@ -70,6 +70,13 @@
     </dependencies>
   </dependencyManagement>
 
+  <dependencies>
+    <!--<dependency>-->
+      <!--<groupId>org.springframework.cloud</groupId>-->
+      <!--<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>-->
+    <!--</dependency>-->
+  </dependencies>
+
   <build>
       <pluginManagement>
           <plugins>
@@ -90,5 +97,18 @@
               </plugin>
           </plugins>
       </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <!-- 打包成可执行的jar -->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
   </build>
+
 </project>

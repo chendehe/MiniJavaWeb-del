@@ -17,6 +17,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
+
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-server</artifactId>
@@ -53,5 +54,5 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
     </dependencies>
-	
+
 </project>
