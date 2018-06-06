@@ -1,37 +1,54 @@
 spring:
   application:
-    name: config-server
-  cloud:
-    config:
-      label: master
-      server:
-        git:
-          uri: https://github.com/chendehe/ConfigurationMgr/
-          search-paths: web/
-          username: chendehe
-          password: *********
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
-#    username: guest
-#    password: guest
+    name: order-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  sleuth:
+    sampler:
+      percentage: 1.0
+  zipkin:
+    rabbitmq:
+      queue: zipkin
+
+logging:
+  level: info
 
 management:
   security:
     # 禁用actuator鉴权
     enabled: false
 
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:1000/eureka/
+test:
+  config: B
+
 ---
 spring:
   profiles: peer1
 server:
-  port: 1050
+  port: 1111
 ---
 spring:
   profiles: peer2
 server:
-  port: 1051
+  port: 1112
+
+# 访问方式 http://admin:admin@localhost:1112
+#security:
+#  basic:
+#    enabled: true
+#  user:
+#    name: user
+#    password: password
+#    role:
+#    - USER
+#  sessions: STATELESS
+#  oauth2:
+#    client:
+#      clientId: order-service
+#      clientSecret: ${security.user.password}
+#      accessTokenUri: http://localhost:1090/oauth/token
+#      grant-type: client_credentials
+#      scope: server
