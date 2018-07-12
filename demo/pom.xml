@@ -170,6 +170,12 @@
       <artifactId>slf4j-simple</artifactId>
       <version>1.7.2</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.jfree</groupId>
+      <artifactId>jfreechart</artifactId>
+      <version>1.0.19</version>
+    </dependency>
   </dependencies>
 
   <build>
