@@ -1,5 +1,6 @@
 package com.chendehe.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -7,6 +8,7 @@ public class UserVo {
 
   private String id;
   private String name;
+  @JsonProperty("sex")
   private Integer gender;
   private Date birthday;
   private String address;
