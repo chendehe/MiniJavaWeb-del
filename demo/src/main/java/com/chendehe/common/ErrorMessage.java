@@ -3,6 +3,7 @@ package com.chendehe.common;
 import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,7 +27,7 @@ public final class ErrorMessage {
   }
 
   public static String message(String code, String... params) {
-    return messageSource.getMessage(code, params, DEFAULT, Locale.getDefault());
+    return messageSource.getMessage(code, params, DEFAULT, LocaleContextHolder.getLocale());
   }
 
 }

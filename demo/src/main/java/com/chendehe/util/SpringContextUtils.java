@@ -1,5 +1,6 @@
 package com.chendehe.util;
 
+import java.util.Map;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -44,5 +45,12 @@ public class SpringContextUtils implements ApplicationContextAware {
    */
   public static <T> T getBean(String name, Class<T> clazz) {
     return getApplicationContext().getBean(name, clazz);
+  }
+
+  /**
+   * 通过name,以及Clazz返回指定的Bean.
+   */
+  public static <T> Map<String, T> getBeanByType(Class<T> clazz) {
+    return applicationContext.getBeansOfType(clazz);
   }
 }

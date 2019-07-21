@@ -1,6 +1,7 @@
 package com.chendehe.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.chendehe.websocket.ServerMessage;
 import com.chendehe.exception.BaseException;
 import com.chendehe.exception.ResultUtil;
 import com.chendehe.service.UserService;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +31,9 @@ public class UserController {
   private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
   private UserService service;
+
+  @Autowired
+  private SimpMessagingTemplate messagingTemplate;
 
   @Autowired
   public UserController(UserService service) {
@@ -142,5 +147,12 @@ public class UserController {
     } catch (BaseException e) {
       return ResultUtil.exception(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  //客户端只要订阅了/topic/subscribeTest主题，调用这个方法即可
+  @PostMapping("/push/{msg}")
+  public void pushMsg(@PathVariable String msg) {
+    String s = "服务器主动推的数据";
+    messagingTemplate.convertAndSend("/topic/subscribeTest", new ServerMessage(s + msg));
   }
 }
