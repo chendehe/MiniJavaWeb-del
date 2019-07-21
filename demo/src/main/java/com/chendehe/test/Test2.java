@@ -1,7 +1,14 @@
 package com.chendehe.test;
 
 public class Test2 {
-  public static void main(String[] args) {
-    System.out.println((long)(0.5 * 60000000000L));
+  public static void PrintString(String s, Print<String> print) {
+    print.print(s);
   }
+  public static void main(String[] args) {
+    PrintString("test", (x) -> System.out.println(x));
+  }
+}
+@FunctionalInterface
+interface Print<T> {
+  public void print(T x);
 }
