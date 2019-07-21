@@ -12,11 +12,15 @@ public class DistributedLockTest {
 
   public static void main(String[] args) {
 
-    final ZkClient zkClient1 = new ZkClient(URL1, TIME_OUT, TIME_OUT, new BytesPushThroughSerializer());
-    final SimpleDistributedLockMutex mutex1 = new SimpleDistributedLockMutex(zkClient1, "/Mutex");
+    final ZkClient zkClient1 =
+        new ZkClient(URL1, TIME_OUT, TIME_OUT, new BytesPushThroughSerializer());
+    final SimpleDistributedLockMutex mutex1 =
+        new SimpleDistributedLockMutex(zkClient1, "/Mutex");
 
-    final ZkClient zkClient2 = new ZkClient(URL2, TIME_OUT, TIME_OUT, new BytesPushThroughSerializer());
-    final SimpleDistributedLockMutex mutex2 = new SimpleDistributedLockMutex(zkClient2, "/Mutex");
+    final ZkClient zkClient2 =
+        new ZkClient(URL2, TIME_OUT, TIME_OUT, new BytesPushThroughSerializer());
+    final SimpleDistributedLockMutex mutex2 =
+        new SimpleDistributedLockMutex(zkClient2, "/Mutex");
 
     try {
       mutex1.acquire();

@@ -8,7 +8,7 @@ import java.nio.charset.Charset;
 public class SimpleClientHandler extends ChannelInboundHandlerAdapter {
 
   /**
-   * 读取服务端通道数据
+   * 读取服务端通道数据.
    *
    * @param ctx 消息
    * @param msg 来获取通道

@@ -27,7 +27,7 @@ class MyProducer {
     props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
     //配置partitionner选择策略，可选配置
-//    props.put("partitioner.class", "com.chendehe.kafka.MyPartitioner");
+    //props.put("partitioner.class", "com.chendehe.kafka.MyPartitioner");
     Producer<String, String> producer = new KafkaProducer<>(props);
 
     ////////

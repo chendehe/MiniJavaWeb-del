@@ -1,21 +1,19 @@
 package com.chendehe.dubbo;
 
-import com.chendehe.dubbo.demo.ConsumerService;
 import java.io.IOException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
- * Dubbo Consumer client.
+ * Dubbo provider.
  */
-public class Consumer {
+public class Provider {
 
     public static void main(String[] args) {
 
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"consumer.xml"});
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[] {"provider.xml"});
         context.start();
 
-        ConsumerService consumerService = context.getBean(ConsumerService.class);
-        consumerService.consumerHello("consumerService");
+        System.out.println("Dubbo provider start...");
 
         try {
             int i = System.in.read();// 按任意键退出
