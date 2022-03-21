@@ -35,7 +35,7 @@
       <zookeeper.version>3.4.11</zookeeper.version>
       <zkclient.version>0.9</zkclient.version>
       <kafka.version>1.0.0</kafka.version>
-      <dubbo.version>2.6.2</dubbo.version>
+      <dubbo.version>2.6.9</dubbo.version>
 
       <my.dubbo.api.version>1.0.0-SNAPSHOT</my.dubbo.api.version>
   </properties>
