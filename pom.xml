@@ -29,7 +29,7 @@
       <fastjson.version>1.2.41</fastjson.version>
       <jedis.version>2.9.0</jedis.version>
       <jodis.version>0.4.1</jodis.version>
-      <poi.version>3.9</poi.version>
+      <poi.version>4.1.1</poi.version>
       <elasticsearch.version>6.1.1</elasticsearch.version>
       <netty.version>4.1.6.Final</netty.version>
       <zookeeper.version>3.4.11</zookeeper.version>
